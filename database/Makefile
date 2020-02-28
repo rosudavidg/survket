@@ -1,11 +1,10 @@
 IMAGE_NAME=rosudavidg/survket-database
 CONTAINER_NAME=survket-database
 
-create_image:
-	docker build -t $(IMAGE_NAME) .
+all: create_image create_container
 
 create_container:
-	docker run -d -p 3306:3306 --name $(CONTAINER_NAME) -e MYSQL_ROOT_PASSWORD=supersecret $(IMAGE_NAME)
+	docker run -p 33070:3306 --name $(CONTAINER_NAME) -e MYSQL_ROOT_PASSWORD=supersecret -d $(IMAGE_NAME)
 
 attach_container:
 	docker exec -it $(CONTAINER_NAME) bash

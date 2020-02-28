@@ -1,4 +1,4 @@
-FROM mysql
+FROM mysql:5
 
 ENV MYSQL_DATABASE survket_db
 

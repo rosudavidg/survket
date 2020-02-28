@@ -27,7 +27,7 @@ services:
         volumes:
             - my-datavolume:/var/lib/mysql
         ports:
-            - "6603:3306"
+            - "33070:3306"
         networks:
             - webnet
 volumes:
