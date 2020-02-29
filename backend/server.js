@@ -7,8 +7,8 @@ const HOST = '0.0.0.0';
 const app = express();
 
 let pool = mysql.createPool({
-    host: "localhost",
-    port: 33070,
+    host: process.env.DATABASE_HOST,
+    port: 3306,
     user: "root",
     password: "supersecret",
     database: "survket_db"
@@ -25,5 +25,7 @@ app.get('/', (req, res) => {
         });
     });
 });
+
+// app.use(bodyParser.json())
 
 app.listen(PORT, HOST);

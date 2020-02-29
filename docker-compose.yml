@@ -1,9 +1,9 @@
 version: "3"
 services:
     web:
-        depends_on:
-            - mysql
-        image: rosudavidg/survket-backend:latest
+        # depends_on:
+        #     - mysql
+        image: back
         deploy:
             replicas: 4
             resources:
@@ -14,13 +14,15 @@ services:
                 condition: on-failure
         ports:
             - "8888:5000"
+        environment:
+            - DATABASE_HOST=mysql
         networks:
             - webnet
     mysql:
         restart: always
-        image: rosudavidg/survket-database:latest
+        image: data
         environment:
-            MYSQL_ROOT_PASSWORD: 'mypassword'
+            MYSQL_ROOT_PASSWORD: 'supersecret'
             MYSQL_DATABASE: "survket_db"
             MYSQL_USER: 'test'
             MYSQL_PASS: 'pass'
@@ -28,10 +30,12 @@ services:
             - my-datavolume:/var/lib/mysql
         ports:
             - "33070:3306"
+        expose:
+            - "3306"
         networks:
             - webnet
 volumes:
     my-datavolume:
 networks:
     webnet:
-
+        # driver: bridge
