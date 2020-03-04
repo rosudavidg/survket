@@ -1,9 +1,7 @@
 version: "3"
 services:
     web:
-        # depends_on:
-        #     - mysql
-        image: back
+        image: rosudavidg/survket-backend
         deploy:
             replicas: 4
             resources:
@@ -17,11 +15,13 @@ services:
         environment:
             - DATABASE_HOST=mysql
             - DATABASE_PORT=3306
+            - EMAIL_HOST=email
+            - EMAIL_PORT=5000
         networks:
             - webnet
     mysql:
         restart: always
-        image: data
+        image: rosudavidg/survket-database
         environment:
             MYSQL_ROOT_PASSWORD: 'supersecret'
             MYSQL_DATABASE: "survket_db"
@@ -35,8 +35,21 @@ services:
             - "3306"
         networks:
             - webnet
+    email:
+        image: rosudavidg/survket-email
+        deploy:
+            replicas: 4
+            resources:
+                limits:
+                    cpus: "0.2"
+                    memory: 50M
+            restart_policy:
+                condition: on-failure
+        expose:
+            - "5000"
+        networks:
+            - webnet
 volumes:
     my-datavolume:
 networks:
     webnet:
-        # driver: bridge
