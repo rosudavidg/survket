@@ -8,7 +8,7 @@ const app = express();
 
 let pool = mysql.createPool({
     host: process.env.DATABASE_HOST,
-    port: 3306,
+    port: process.env.DATABASE_PORT,
     user: "root",
     password: "supersecret",
     database: "survket_db"
