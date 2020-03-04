@@ -16,6 +16,7 @@ services:
             - "8888:5000"
         environment:
             - DATABASE_HOST=mysql
+            - DATABASE_PORT=3306
         networks:
             - webnet
     mysql:
