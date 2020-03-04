@@ -10,4 +10,4 @@ COPY app.py /usr/src/app/
 
 EXPOSE 5000
 
-CMD ["python", "/usr/src/app/app.py"]
+CMD ["python3", "/usr/src/app/app.py"]
