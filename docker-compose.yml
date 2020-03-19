@@ -6,7 +6,7 @@ services:
     depends_on:
       - database
     deploy:
-      replicas: 4
+      replicas: 1
       resources:
         limits:
           cpus: "0.2"
@@ -39,7 +39,7 @@ services:
     # image: rosudavidg/survket-email:latest
     image: survket_email
     deploy:
-      replicas: 4
+      replicas: 1
       resources:
         limits:
           cpus: "0.2"
