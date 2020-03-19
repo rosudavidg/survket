@@ -1,5 +1,7 @@
 .PHONY: start init stop backend database email
 
+restart: stop close init all
+
 all: backend database email start
 
 init:
