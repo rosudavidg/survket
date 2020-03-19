@@ -1,55 +1,58 @@
 version: "3"
 services:
-    web:
-        image: rosudavidg/survket-backend
-        deploy:
-            replicas: 4
-            resources:
-                limits:
-                    cpus: "0.2"
-                    memory: 50M
-            restart_policy:
-                condition: on-failure
-        ports:
-            - "8888:5000"
-        environment:
-            - DATABASE_HOST=mysql
-            - DATABASE_PORT=3306
-            - EMAIL_HOST=email
-            - EMAIL_PORT=5000
-        networks:
-            - webnet
-    mysql:
-        restart: always
-        image: rosudavidg/survket-database
-        environment:
-            MYSQL_ROOT_PASSWORD: 'supersecret'
-            MYSQL_DATABASE: "survket_db"
-            MYSQL_USER: 'test'
-            MYSQL_PASS: 'pass'
-        volumes:
-            - my-datavolume:/var/lib/mysql
-        ports:
-            - "33070:3306"
-        expose:
-            - "3306"
-        networks:
-            - webnet
-    email:
-        image: rosudavidg/survket-email:latest
-        deploy:
-            replicas: 4
-            resources:
-                limits:
-                    cpus: "0.2"
-                    memory: 50M
-            restart_policy:
-                condition: on-failure
-        expose:
-            - "5000"
-        networks:
-            - webnet
+  backend:
+    # image: rosudavidg/survket-backend
+    image: survket_backend
+    depends_on:
+      - database
+    deploy:
+      replicas: 4
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8888:5000"
+    environment:
+      - DATABASE_USER=postgres
+      - DATABASE_HOST=database
+      - DATABASE_NAME=survket_db
+      - DATABASE_PASSWORD=password
+      - DATABASE_PORT=5432
+    networks:
+      - webnet
+  database:
+    # image: rosudavidg/survket-database
+    image: survket_database
+    environment:
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: survket_db
+    volumes:
+      - my-datavolume:/var/lib/database
+    ports:
+      - "54321:5432"
+    networks:
+      - webnet
+  email:
+    # image: rosudavidg/survket-email:latest
+    image: survket_email
+    deploy:
+      replicas: 4
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 50M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "5000:5000"
+    expose:
+      - "5000"
+    networks:
+      - webnet
 volumes:
-    my-datavolume:
+  my-datavolume:
 networks:
-    webnet:
+  webnet:

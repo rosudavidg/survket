@@ -1,5 +1,5 @@
-FROM mysql:5
-
-ENV MYSQL_DATABASE survket_db
+FROM postgres
 
 COPY ./init-scripts/ /docker-entrypoint-initdb.d/
+
+EXPOSE 5432
