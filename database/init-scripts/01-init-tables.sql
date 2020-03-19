@@ -30,10 +30,5 @@ CREATE TABLE IF NOT EXISTS surveys (
     id SERIAL PRIMARY KEY,
     creator INTEGER REFERENCES users(id) NOT NULL,
     reward INTEGER NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS survey (
-    id SERIAL PRIMARY KEY,
-    creator INTEGER REFERENCES users(id) NOT NULL,
     timestamp_created TIMESTAMP DEFAULT NOW()
 );
