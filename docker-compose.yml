@@ -23,6 +23,8 @@ services:
       - DATABASE_PORT=5432
     networks:
       - webnet
+    volumes:
+      - ./backend/:/usr/src/app
   database:
     # image: rosudavidg/survket-database
     image: survket_database
