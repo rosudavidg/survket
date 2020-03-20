@@ -18,6 +18,7 @@ router.post("/", async (req, res, next) => {
     last_name,
     role_id,
     email,
+    password,
     date_of_birth,
     gender
   } = req.body;
@@ -43,6 +44,10 @@ router.post("/", async (req, res, next) => {
       email: {
         value: email,
         type: "email"
+      },
+      password: {
+        value: password,
+        type: "password"
       }
     });
 
@@ -60,6 +65,7 @@ router.post("/", async (req, res, next) => {
     await UsersService.createUser(
       role_id,
       email,
+      password,
       first_name,
       last_name,
       gender,

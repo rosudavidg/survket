@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
     role_id INTEGER REFERENCES roles(id) NOT NULL,
     activated BOOLEAN DEFAULT FALSE,
     email VARCHAR (50) NOT NULL UNIQUE,
+    password VARCHAR (64) NOT NULL,
     first_name VARCHAR (25) NOT NULL,
     last_name VARCHAR (25) NOT NULL,
     gender CHAR,

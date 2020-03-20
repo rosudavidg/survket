@@ -62,6 +62,14 @@ const validateFields = fields => {
           );
         }
         break;
+      case "password":
+        if (!validator.isAscii(fieldValue)) {
+          throw new ServerError(
+            `Campul ${fieldName} trebuie sa fie gender`,
+            400
+          );
+        }
+        break;
     }
   }
 };
