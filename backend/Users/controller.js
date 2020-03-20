@@ -1,16 +1,23 @@
 const express = require("express");
 const UsersService = require("./services.js");
 const { validateFields } = require("../utils");
+const { authorizeAndExtractToken } = require("../security/JWT/index.js");
 const router = express.Router();
+const { authorizeRoles } = require("../Security/Roles/index.js");
 
-router.get("/", async (req, res, next) => {
-  try {
-    const users = await UsersService.getAll();
-    res.json(users);
-  } catch (err) {
-    next(err);
+router.get(
+  "/",
+  authorizeAndExtractToken,
+  authorizeRoles("admin", "support"),
+  async (req, res, next) => {
+    try {
+      const users = await UsersService.getAll();
+      res.json(users);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 router.post("/", async (req, res, next) => {
   let {
@@ -73,6 +80,29 @@ router.post("/", async (req, res, next) => {
     );
 
     res.status(201).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post("/login", async (req, res, next) => {
+  let { email, password } = req.body;
+
+  try {
+    validateFields({
+      email: {
+        value: email,
+        type: "email"
+      },
+      password: {
+        value: password,
+        type: "password"
+      }
+    });
+
+    const token = await UsersService.authenticate(email, password);
+
+    res.status(200).json(token);
   } catch (err) {
     next(err);
   }

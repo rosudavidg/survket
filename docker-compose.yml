@@ -21,6 +21,11 @@ services:
       - DATABASE_NAME=survket_db
       - DATABASE_PASSWORD=password
       - DATABASE_PORT=5432
+      - JWT_ISSUER=survket_backend
+      - JWT_SUBJECT=Authentication token
+      - JWT_AUDIENCE=survket_frontend
+      - JWT_EXPIRESIN=1w
+      - JWT_SECRET_KEY=myawesomeultrasecretkey
     networks:
       - webnet
     volumes:

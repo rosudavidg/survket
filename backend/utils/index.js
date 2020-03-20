@@ -4,12 +4,14 @@ const { ServerError } = require("../errors");
 
 const validateFields = fields => {
   for (let fieldName in fields) {
-    const fieldValue = fields[fieldName].value + "";
+    let fieldValue = fields[fieldName].value;
     const fieldType = fields[fieldName].type;
 
     if (!fieldValue) {
       throw new ServerError(`Lipseste campul ${fieldName}`, 400);
     }
+
+    fieldValue += "";
 
     switch (fieldType) {
       case "ascii":
