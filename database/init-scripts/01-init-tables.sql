@@ -32,3 +32,21 @@ CREATE TABLE IF NOT EXISTS surveys (
     reward INTEGER NOT NULL,
     timestamp_created TIMESTAMP DEFAULT NOW()
 );
+
+CREATE TABLE IF NOT EXISTS surveys_texts (
+    id SERIAL PRIMARY KEY,
+    survey_id INTEGER REFERENCES surveys(id) NOT NULL,
+    question VARCHAR (256) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS surveys_choices (
+    id SERIAL PRIMARY KEY,
+    survey_id INTEGER REFERENCES surveys(id) NOT NULL,
+    question VARCHAR (256) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS surveys_choices_elements (
+    id SERIAL PRIMARY KEY,
+    survey_choice_id INTEGER REFERENCES surveys_choices(id) NOT NULL,
+    text VARCHAR (256) NOT NULL
+);
