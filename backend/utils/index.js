@@ -11,10 +11,9 @@ const validateFields = fields => {
       throw new ServerError(`Lipseste campul ${fieldName}`, 400);
     }
 
-    fieldValue += "";
-
     switch (fieldType) {
       case "ascii":
+        fieldValue += "";
         if (!validator.isAscii(fieldValue)) {
           throw new ServerError(
             `Campul ${fieldName} trebuie sa contina doar caractere ascii`,
@@ -23,6 +22,7 @@ const validateFields = fields => {
         }
         break;
       case "alpha":
+        fieldValue += "";
         if (!validator.isAlpha(fieldValue)) {
           throw new ServerError(
             `Campul ${fieldName} trebuie sa contina doar litere`,
@@ -31,6 +31,7 @@ const validateFields = fields => {
         }
         break;
       case "int":
+        fieldValue += "";
         if (!validator.isInt(fieldValue)) {
           throw new ServerError(
             `Campul ${fieldName} trebuie sa fie un numar intreg`,
@@ -39,16 +40,19 @@ const validateFields = fields => {
         }
         break;
       case "jwt":
+        fieldValue += "";
         if (!validator.isJWT(fieldValue)) {
           throw new ServerError(`Campul ${fieldName} trebuie sa fie jwt`, 400);
         }
         break;
       case "date":
+        fieldValue += "";
         if (!validator.toDate(fieldValue)) {
           throw new ServerError(`Campul ${fieldName} trebuie sa fie date`, 400);
         }
         break;
       case "email":
+        fieldValue += "";
         if (!validator.isEmail(fieldValue)) {
           throw new ServerError(
             `Campul ${fieldName} trebuie sa fie email`,
@@ -57,6 +61,7 @@ const validateFields = fields => {
         }
         break;
       case "gender":
+        fieldValue += "";
         if (fieldValue !== "M" && fieldValue !== "F") {
           throw new ServerError(
             `Campul ${fieldName} trebuie sa fie gender`,
@@ -65,9 +70,18 @@ const validateFields = fields => {
         }
         break;
       case "password":
+        fieldValue += "";
         if (!validator.isAscii(fieldValue)) {
           throw new ServerError(
             `Campul ${fieldName} trebuie sa fie gender`,
+            400
+          );
+        }
+        break;
+      case "array":
+        if (!Array.isArray(fieldValue)) {
+          throw new ServerError(
+            `Campul ${fieldName} trebuie sa fie array`,
             400
           );
         }

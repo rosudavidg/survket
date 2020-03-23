@@ -37,7 +37,7 @@ const createUser = async (
 
 const authenticate = async (email, password) => {
   const queryResult = await query(
-    "SELECT u.password, r.role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = $1",
+    "SELECT u.password, r.role, u.id FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = $1",
     [email]
   );
 
@@ -50,12 +50,13 @@ const authenticate = async (email, password) => {
 
   const storedPassword = queryResult[0].password;
   const userRole = queryResult[0].role;
+  const userId = queryResult[0].id;
 
   if (!(await compare(password, storedPassword))) {
     throw new ServerError(`Parola pentru emailul ${email} este gresita!`, 403);
   }
 
-  const payload = { userEmail: email, userRole };
+  const payload = { userEmail: email, userRole, userId };
 
   const token = await generateToken(payload);
   return token;
