@@ -1,1 +1,2 @@
 Flask==1.1.1
+get_docker_secret

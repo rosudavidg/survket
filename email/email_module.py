@@ -1,11 +1,13 @@
 import smtplib
+import os
+from get_docker_secret import get_docker_secret
 
 
 def send_activation_link(to_email, token):
-    gmail_user = 'survket@gmail.com'
-    gmail_password = 'fozciw-Corxuh-9curro'
+    gmail_user = os.environ['EMAIL_ADDRESS']
+    sent_from = os.environ['EMAIL_ADDRESS']
 
-    sent_from = 'survket@gmail.com'
+    gmail_password = get_docker_secret(os.environ['EMAIL_PASSWORD'])
 
     to = [to_email]
     subject = 'Survket Activation link'
