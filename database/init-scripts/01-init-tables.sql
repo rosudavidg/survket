@@ -52,3 +52,9 @@ CREATE TABLE IF NOT EXISTS surveys_choices_elements (
     survey_choice_id INTEGER REFERENCES surveys_choices(id) NOT NULL,
     text VARCHAR (256) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS confirmations (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER REFERENCES users(id) NOT NULL UNIQUE,
+    token VARCHAR (64) NOT NULL
+);
