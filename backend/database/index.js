@@ -1,10 +1,11 @@
 const { Pool } = require("pg");
+const fs = require("fs");
 
 const pool = new Pool({
-  user: process.env.DATABASE_USER,
+  user: fs.readFileSync(process.env.DATABASE_USER, "utf8"),
   host: process.env.DATABASE_HOST,
-  database: process.env.DATABASE_NAME,
-  password: process.env.DATABASE_PASSWORD,
+  database: fs.readFileSync(process.env.DATABASE_NAME, "utf8"),
+  password: fs.readFileSync(process.env.DATABASE_PASSWORD, "utf8"),
   port: process.env.DATABASE_PORT
 });
 
