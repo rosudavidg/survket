@@ -4,6 +4,7 @@ const { validateFields } = require("../utils");
 const { authorizeAndExtractToken } = require("../security/JWT/index.js");
 const router = express.Router();
 const { authorizeRoles } = require("../Security/Roles/index.js");
+const { ServerError } = require("../errors");
 
 router.get(
   "/",
@@ -19,11 +20,56 @@ router.get(
   }
 );
 
-router.post("/", async (req, res, next) => {
+router.post(
+  "/",
+  authorizeAndExtractToken,
+  authorizeRoles("admin", "support"),
+  async (req, res, next) => {
+    let { role_id } = req.body;
+
+    try {
+      if (role_id === undefined) {
+        throw new ServerError("Field role_id is not defined.", 400);
+      }
+
+      await register(res, req, next, role_id);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+router.post("/register", async (req, res, next) => {
+  await register(res, req, next, 1);
+});
+
+router.post("/login", async (req, res, next) => {
+  let { email, password } = req.body;
+
+  try {
+    validateFields({
+      email: {
+        value: email,
+        type: "email"
+      },
+      password: {
+        value: password,
+        type: "password"
+      }
+    });
+
+    const token = await UsersService.authenticate(email, password);
+
+    res.status(200).json(token);
+  } catch (err) {
+    next(err);
+  }
+});
+
+register = async (res, req, next, role_id) => {
   let {
     first_name,
     last_name,
-    role_id,
     email,
     password,
     date_of_birth,
@@ -83,29 +129,6 @@ router.post("/", async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-});
-
-router.post("/login", async (req, res, next) => {
-  let { email, password } = req.body;
-
-  try {
-    validateFields({
-      email: {
-        value: email,
-        type: "email"
-      },
-      password: {
-        value: password,
-        type: "password"
-      }
-    });
-
-    const token = await UsersService.authenticate(email, password);
-
-    res.status(200).json(token);
-  } catch (err) {
-    next(err);
-  }
-});
+};
 
 module.exports = router;
