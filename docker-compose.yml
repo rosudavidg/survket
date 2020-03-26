@@ -57,7 +57,7 @@ services:
     # image: rosudavidg/survket-email:latest
     image: survket_email
     environment:
-      EMAIL_ADDRESS: survket@gmail.com
+      EMAIL_ADDRESS: /run/secrets/secret_email_address
       EMAIL_PASSWORD: /run/secrets/secret_email_password
     deploy:
       replicas: 1
@@ -68,6 +68,7 @@ services:
       restart_policy:
         condition: on-failure
     secrets:
+      - secret_email_address
       - secret_email_password
     expose:
       - "5000"
@@ -78,6 +79,8 @@ volumes:
 networks:
   webnet:
 secrets:
+  secret_email_address:
+    file: ./secrets/secret_email_address
   secret_email_password:
     file: ./secrets/secret_email_password
   secret_database_password:
