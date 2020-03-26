@@ -1,6 +1,6 @@
 const express = require("express");
 const UsersService = require("./services.js");
-const { validateFields } = require("../utils");
+const { validateFields, sendConfirmationLink } = require("../utils");
 const { authorizeAndExtractToken } = require("../security/JWT/index.js");
 const router = express.Router();
 const { authorizeRoles } = require("../Security/Roles/index.js");
@@ -124,6 +124,12 @@ register = async (res, req, next, role_id) => {
       gender,
       date_of_birth
     );
+
+    // TODO: Generate token
+
+    // TODO: Insert token into database/confirmations
+
+    await sendConfirmationLink(email, "token");
 
     res.status(201).end();
   } catch (err) {

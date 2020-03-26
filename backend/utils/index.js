@@ -2,6 +2,8 @@ const validator = require("validator");
 
 const { ServerError } = require("../errors");
 
+const http = require("http");
+
 const validateFields = fields => {
   for (let fieldName in fields) {
     let fieldValue = fields[fieldName].value;
@@ -90,6 +92,27 @@ const validateFields = fields => {
   }
 };
 
+const sendConfirmationLink = async (email, token) => {
+  const options = {
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    path: `/?email=${email}&token=${token}`,
+    method: "GET"
+  };
+
+  await http
+    .request(options, function(res) {
+      console.log("STATUS: " + res.statusCode);
+      console.log("HEADERS: " + JSON.stringify(res.headers));
+      res.setEncoding("utf8");
+      res.on("data", function(chunk) {
+        console.log("BODY: " + chunk);
+      });
+    })
+    .end();
+};
+
 module.exports = {
-  validateFields
+  validateFields,
+  sendConfirmationLink
 };
