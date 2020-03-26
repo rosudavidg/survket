@@ -1,4 +1,4 @@
-version: "3"
+version: "3.1"
 services:
   backend:
     # image: rosudavidg/survket-backend
@@ -16,16 +16,22 @@ services:
     ports:
       - "8888:5000"
     environment:
-      - DATABASE_USER=postgres
-      - DATABASE_HOST=database
-      - DATABASE_NAME=survket_db
-      - DATABASE_PASSWORD=password
-      - DATABASE_PORT=5432
-      - JWT_ISSUER=survket_backend
-      - JWT_SUBJECT=Authentication token
-      - JWT_AUDIENCE=survket_frontend
-      - JWT_EXPIRESIN=1w
-      - JWT_SECRET_KEY=myawesomeultrasecretkey
+      EMAIL_HOST: email
+      EMAIL_PORT: 5000
+      DATABASE_USER: /run/secrets/secret_database_user
+      DATABASE_HOST: database
+      DATABASE_NAME: /run/secrets/secret_database_db
+      DATABASE_PASSWORD: /run/secrets/secret_database_password
+      DATABASE_PORT: 5432
+      JWT_ISSUER: survket_backend
+      JWT_SUBJECT: Authentication token
+      JWT_AUDIENCE: survket_frontend
+      JWT_EXPIRESIN: 1w
+      JWT_SECRET_KEY: myawesomeultrasecretkey
+    secrets:
+      - secret_database_user
+      - secret_database_password
+      - secret_database_db
     networks:
       - webnet
     volumes:
@@ -34,10 +40,15 @@ services:
     # image: rosudavidg/survket-database
     image: survket_database
     environment:
-      POSTGRES_PASSWORD: "password"
-      POSTGRES_DB: survket_db
+      POSTGRES_USER_FILE: /run/secrets/secret_database_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/secret_database_password
+      POSTGRES_DB_FILE: /run/secrets/secret_database_db
+    secrets:
+      - secret_database_user
+      - secret_database_password
+      - secret_database_db
     volumes:
-      - survket_database_volume:/var/lib/postgresql/data
+      - volume_database:/var/lib/postgresql/data
     ports:
       - "54321:5432"
     networks:
@@ -45,6 +56,9 @@ services:
   email:
     # image: rosudavidg/survket-email:latest
     image: survket_email
+    environment:
+      EMAIL_ADDRESS: survket@gmail.com
+      EMAIL_PASSWORD: /run/secrets/secret_email_password
     deploy:
       replicas: 1
       resources:
@@ -53,11 +67,22 @@ services:
           memory: 50M
       restart_policy:
         condition: on-failure
+    secrets:
+      - secret_email_password
     expose:
       - "5000"
     networks:
       - webnet
 volumes:
-  survket_database_volume:
+  volume_database:
 networks:
   webnet:
+secrets:
+  secret_email_password:
+    file: ./secrets/secret_email_password
+  secret_database_password:
+    file: ./secrets/secret_database_password
+  secret_database_user:
+    file: ./secrets/secret_database_user
+  secret_database_db:
+    file: ./secrets/secret_database_db
