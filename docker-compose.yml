@@ -37,7 +37,7 @@ services:
       POSTGRES_PASSWORD: "password"
       POSTGRES_DB: survket_db
     volumes:
-      - my-datavolume:/var/lib/database
+      - survket_database_volume:/var/lib/postgresql/data
     ports:
       - "54321:5432"
     networks:
@@ -58,6 +58,6 @@ services:
     networks:
       - webnet
 volumes:
-  my-datavolume:
+  survket_database_volume:
 networks:
   webnet:
