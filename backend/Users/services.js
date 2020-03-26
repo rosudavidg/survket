@@ -19,7 +19,6 @@ const createUser = async (
   date_of_birth
 ) => {
   const hashedPassword = await hash(password);
-  console.log(hashedPassword.length);
 
   return await query(
     "INSERT INTO users (role_id, email, password, first_name, last_name, gender, date_of_birth) VALUES ($1, $2, $3, $4, $5, $6, $7)",
