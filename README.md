@@ -73,8 +73,11 @@ prelucreaza si trimite emailuri specifice.
 ##### Setarea datelor
 
 ```bash
-printf "my@secret.email" | docker secret create secret_email -
-printf "mysecretemailpassword" | docker secret create secret_email_password -
+mkdir secrets && cd secrets
+echo my_database_name     > secret_database_db
+echo my_database_user     > secret_database_user
+echo my_database_password > secret_database_password
+echo my_email_password    > secret_email_password
 ```
 
 | Endpoint | Params       | Descriere                  |
