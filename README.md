@@ -10,21 +10,22 @@ In dezvoltarea aplicatiei folosesc Docker: fiecare serviciu este un container,
 iar aplicatia ruleaza ca un stack de servicii.
 
 Există 3 roluri diferite:
+
 1. Administrator
    - modifică rate de schimb monede virtuale - bani
    - adaugă chestionare speciale
    - aprobă cereri noi de înscriere (persoane juridice)
    - modifică planul tarifar
 2. Utilizator
-    1. Persoană fizică
-       - rezolvă chestionare
-       - schimbă monede virtuale în bani
-       - utilizează vouchere
-       - pot adăuga tichete (suport tehnic)
-    2. Persoană juridică
-       - adaugă chestionare
-       - adaugă vouchere
-       - pot adăuga tichete (suport tehnic)
+   1. Persoană fizică
+      - rezolvă chestionare
+      - schimbă monede virtuale în bani
+      - utilizează vouchere
+      - pot adăuga tichete (suport tehnic)
+   2. Persoană juridică
+      - adaugă chestionare
+      - adaugă vouchere
+      - pot adăuga tichete (suport tehnic)
 3. Suport tehnic
    - CRUD chestionare
    - adaugă vouchere
@@ -66,6 +67,7 @@ Tabela users
 | activated     | boolean     | Contul este sau nu activat   |
 
 #### Email API
+
 Serviciu de trimitere emailuri. Este dezvoltat in Python, cu ajutorul
 framework-ului Flask. Concret, aplicatia primeste cereri HTTP pe care le
 prelucreaza si trimite emailuri specifice.
@@ -77,6 +79,7 @@ mkdir secrets && cd secrets
 echo my_database_name     > secret_database_db
 echo my_database_user     > secret_database_user
 echo my_database_password > secret_database_password
+echo my_email_address     > secret_email_address
 echo my_email_password    > secret_email_password
 ```
 
