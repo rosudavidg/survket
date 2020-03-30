@@ -24,7 +24,6 @@
 | date_of_birth | date     |                | Data de nastere a utilizatorului             |
 | email         | email    |       50       | Email-ul utilizatorului                      |
 | password      | password |                | Parola utilizatorului                        |
-| password      | password |                | Parola utilizatorului                        |
 | gender        | alpha    |       1        | Genul utilizatorului                         |
 
 ## Roles
