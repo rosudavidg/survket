@@ -40,7 +40,28 @@ router.post(
 );
 
 router.post("/register", async (req, res, next) => {
-  await register(res, req, next, 1);
+  let { role_id, company_name } = req.body;
+  try {
+    if (role_id === undefined)
+      throw new ServerError("Field role_id is not defined!", 400);
+
+    if (![3, 4].includes(role_id))
+      throw new ServerError(
+        `Cannot create user with role_id = ${role_id}!`,
+        400
+      );
+
+    if (role_id == 4 && company_name === undefined)
+      throw new ServerError("Field company_name is not defined!", 400);
+
+    let userId = await register(res, req, next, role_id);
+
+    if (role_id == 4) await UsersService.AddCompany(userId, company_name);
+
+    res.status(201).end();
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.post("/login", async (req, res, next) => {
@@ -115,7 +136,7 @@ register = async (res, req, next, role_id) => {
 
     gender = gender || null;
 
-    await UsersService.createUser(
+    let rows = await UsersService.createUser(
       role_id,
       email,
       password,
@@ -125,13 +146,13 @@ register = async (res, req, next, role_id) => {
       date_of_birth
     );
 
-    // TODO: Generate token
+    // TODO: Generate confirmation token
 
     // TODO: Insert token into database/confirmations
 
     await sendConfirmationLink(email, "token");
 
-    res.status(201).end();
+    return rows[0].id;
   } catch (err) {
     next(err);
   }

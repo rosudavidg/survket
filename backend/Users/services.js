@@ -21,7 +21,7 @@ const createUser = async (
   const hashedPassword = await hash(password);
 
   return await query(
-    "INSERT INTO users (role_id, email, password, first_name, last_name, gender, date_of_birth) VALUES ($1, $2, $3, $4, $5, $6, $7)",
+    "INSERT INTO users (role_id, email, password, first_name, last_name, gender, date_of_birth) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
     [
       role_id,
       email,
@@ -61,8 +61,16 @@ const authenticate = async (email, password) => {
   return token;
 };
 
+const AddCompany = async (userId, companyName) => {
+  await query("INSERT INTO creator_users (id, company_name) VALUES ($1, $2)", [
+    userId,
+    companyName
+  ]);
+};
+
 module.exports = {
   getAll,
   createUser,
-  authenticate
+  authenticate,
+  AddCompany
 };

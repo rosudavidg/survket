@@ -94,4 +94,21 @@ router.post(
   }
 );
 
+router.get(
+  "/:id",
+  authorizeAndExtractToken,
+  authorizeRoles("user_creator"),
+  async (req, res, next) => {
+    let userId = req.state.decoded.userId;
+    let surveyId = req.params.id;
+
+    try {
+      let surveys = await SurveysService.getById(userId, surveyId);
+      res.status(200).json(surveys);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 module.exports = router;

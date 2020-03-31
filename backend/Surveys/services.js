@@ -1,4 +1,5 @@
 const query = require("../database");
+const { ServerError } = require("../errors");
 
 const create = async (userId, name, reward, surveys_texts, surveys_choices) => {
   // Insert into surveys
@@ -37,9 +38,11 @@ const create = async (userId, name, reward, surveys_texts, surveys_choices) => {
   }
 };
 
-const getAll = async () => {
+const getAll = async userId => {
   // Get surveys
-  let surveys = await query("SELECT * FROM surveys");
+  let surveys = await query("SELECT * FROM surveys WHERE creator = $1", [
+    userId
+  ]);
 
   for (let i = 0; i < surveys.length; i++) {
     let survey = surveys[i];
@@ -76,4 +79,49 @@ const getAll = async () => {
   return surveys;
 };
 
-module.exports = { create, getAll };
+const getById = async (userId, surveyId) => {
+  // Get surveys
+  let surveys = await query(
+    "SELECT * FROM surveys WHERE creator = $1 and id = $2",
+    [userId, surveyId]
+  );
+
+  if (surveys.length != 1)
+    throw new ServerError(`Survey ${surveyId} not found.`, 400);
+
+  for (let i = 0; i < surveys.length; i++) {
+    let survey = surveys[i];
+
+    // Get surveys_texts
+    let surveys_text = await query(
+      "SELECT id, question FROM surveys_texts WHERE survey_id = $1",
+      [survey.id]
+    );
+
+    survey["surveys_texts"] = surveys_text;
+
+    // Get surveys_choices
+    let surveys_choices = await query(
+      "SELECT * FROM surveys_choices WHERE survey_id = $1",
+      [survey.id]
+    );
+
+    survey["surveys_choices"] = [];
+
+    // Get surveys_choices_elements
+    for (let j = 0; j < surveys_choices.length; j++) {
+      let surveys_choices_elements = await query(
+        "SELECT id, text FROM surveys_choices_elements WHERE survey_choice_id = $1",
+        [surveys_choices[j].id]
+      );
+      survey["surveys_choices"].push({
+        question: surveys_choices[j].question,
+        surveys_choices_elements
+      });
+    }
+  }
+
+  return surveys[0];
+};
+
+module.exports = { create, getAll, getById };
