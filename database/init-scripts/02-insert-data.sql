@@ -18,3 +18,7 @@ INSERT INTO
 INSERT INTO
     users (first_name, last_name, email, password, activated, role_id, date_of_birth)
     VALUES ('Osan', 'Oficial', 'diferenta@buzunarul.tau', '$2a$05$.Err72Bs/V43iN25E0aL2OEEHi0H/RKa.K4MlIh/wtNv7lqGkWcF.', TRUE, 4, '1994-04-03');
+
+INSERT INTO
+    users (first_name, last_name, email, password, activated, role_id, date_of_birth)
+    VALUES ('Miahi', 'Banditu', 'carrefour@galactic.tau', '$2a$05$.Err72Bs/V43iN25E0aL2OEEHi0H/RKa.K4MlIh/wtNv7lqGkWcF.', TRUE, 4, '1994-04-03');
