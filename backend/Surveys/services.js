@@ -154,6 +154,7 @@ const getById = async (userId, surveyId) => {
         [surveys_choices[j].id]
       );
       survey["surveys_choices"].push({
+        id: surveys_choices[j].id,
         question: surveys_choices[j].question,
         surveys_choices_elements
       });
@@ -196,6 +197,7 @@ const getByIdAsSolver = async surveyId => {
         [surveys_choices[j].id]
       );
       survey["surveys_choices"].push({
+        id: surveys_choices[j].id,
         question: surveys_choices[j].question,
         surveys_choices_elements
       });
@@ -205,4 +207,40 @@ const getByIdAsSolver = async surveyId => {
   return surveys[0];
 };
 
-module.exports = { create, getAll, getById, getAllAsSolver, getByIdAsSolver };
+let solve = async (surveyId, userId, surveys_text, surveys_choices) => {
+  let rows = undefined;
+
+  rows = await query(
+    "INSERT INTO solved_surveys (survey_id, user_id) VALUES ($1, $2) RETURNING *",
+    [surveyId, userId]
+  );
+
+  solved_survey_id = rows[0].id;
+
+  for (let i = 0; i < surveys_text.length; i++) {
+    await query(
+      "INSERT INTO solved_surveys_texts (solved_survey_id, survey_text_id, answer) VALUES ($1, $2, $3)",
+      [solved_survey_id, surveys_text[i].id, surveys_text[i].answer]
+    );
+  }
+
+  for (let i = 0; i < surveys_choices.length; i++) {
+    await query(
+      "INSERT INTO solved_surveys_choices (solved_survey_id, survey_choice_id, survey_choice_element_id) VALUES ($1, $2, $3)",
+      [
+        solved_survey_id,
+        surveys_choices[i].id,
+        surveys_choices[i].survey_choice_element_id
+      ]
+    );
+  }
+};
+
+module.exports = {
+  create,
+  getAll,
+  getById,
+  getAllAsSolver,
+  getByIdAsSolver,
+  solve
+};

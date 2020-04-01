@@ -63,7 +63,8 @@ CREATE TABLE IF NOT EXISTS solved_surveys (
     id SERIAL PRIMARY KEY,
     survey_id INTEGER REFERENCES surveys(id) NOT NULL,
     user_id INTEGER REFERENCES users(id) NOT NULL,
-    timestamp_solved TIMESTAMP DEFAULT NOW()
+    timestamp_solved TIMESTAMP DEFAULT NOW(),
+    UNIQUE (survey_id, user_id)
 );
 
 CREATE TABLE IF NOT EXISTS solved_surveys_texts (

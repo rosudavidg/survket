@@ -118,4 +118,65 @@ router.get(
   }
 );
 
+router.post(
+  "/:id/solve",
+  authorizeAndExtractToken,
+  authorizeRoles("user_solver"),
+  async (req, res, next) => {
+    let { userId } = req.state.decoded;
+    let surveyId = req.params.id;
+    let { surveys_texts, surveys_choices } = req.body;
+
+    try {
+      validateFields({
+        surveys_texts: {
+          value: surveys_texts,
+          type: "array"
+        },
+        surveys_choices: {
+          value: surveys_choices,
+          type: "array"
+        }
+      });
+
+      for (let i = 0; i < surveys_texts.length; i++) {
+        validateFields({
+          id: {
+            value: surveys_texts[i].id,
+            type: "int"
+          },
+          answer: {
+            value: surveys_texts[i].answer,
+            type: "ascii"
+          }
+        });
+      }
+
+      for (let i = 0; i < surveys_choices.length; i++) {
+        validateFields({
+          id: {
+            value: surveys_choices[i].id,
+            type: "int"
+          },
+          survey_choice_element_id: {
+            value: surveys_choices[i].survey_choice_element_id,
+            type: "int"
+          }
+        });
+      }
+
+      await SurveysService.solve(
+        surveyId,
+        userId,
+        surveys_texts,
+        surveys_choices
+      );
+
+      res.sendStatus(201);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 module.exports = router;
