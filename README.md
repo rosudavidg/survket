@@ -72,7 +72,7 @@ Serviciu de trimitere emailuri. Este dezvoltat in Python, cu ajutorul
 framework-ului Flask. Concret, aplicatia primeste cereri HTTP pe care le
 prelucreaza si trimite emailuri specifice.
 
-##### Setarea datelor
+### Setarea datelor
 
 ```bash
 mkdir secrets && cd secrets
