@@ -79,6 +79,45 @@ const getAll = async userId => {
   return surveys;
 };
 
+const getAllAsSolver = async () => {
+  // Get surveys
+  let surveys = await query("SELECT * FROM surveys");
+
+  for (let i = 0; i < surveys.length; i++) {
+    let survey = surveys[i];
+
+    // Get surveys_texts
+    let surveys_text = await query(
+      "SELECT id, question FROM surveys_texts WHERE survey_id = $1",
+      [survey.id]
+    );
+
+    survey["surveys_texts"] = surveys_text;
+
+    // Get surveys_choices
+    let surveys_choices = await query(
+      "SELECT * FROM surveys_choices WHERE survey_id = $1",
+      [survey.id]
+    );
+
+    survey["surveys_choices"] = [];
+
+    // Get surveys_choices_elements
+    for (let j = 0; j < surveys_choices.length; j++) {
+      let surveys_choices_elements = await query(
+        "SELECT id, text FROM surveys_choices_elements WHERE survey_choice_id = $1",
+        [surveys_choices[j].id]
+      );
+      survey["surveys_choices"].push({
+        question: surveys_choices[j].question,
+        surveys_choices_elements
+      });
+    }
+  }
+
+  return surveys;
+};
+
 const getById = async (userId, surveyId) => {
   // Get surveys
   let surveys = await query(
@@ -124,4 +163,46 @@ const getById = async (userId, surveyId) => {
   return surveys[0];
 };
 
-module.exports = { create, getAll, getById };
+const getByIdAsSolver = async surveyId => {
+  // Get surveys
+  let surveys = await query("SELECT * FROM surveys WHERE id = $1", [surveyId]);
+
+  if (surveys.length != 1)
+    throw new ServerError(`Survey ${surveyId} not found.`, 400);
+
+  for (let i = 0; i < surveys.length; i++) {
+    let survey = surveys[i];
+
+    // Get surveys_texts
+    let surveys_text = await query(
+      "SELECT id, question FROM surveys_texts WHERE survey_id = $1",
+      [survey.id]
+    );
+
+    survey["surveys_texts"] = surveys_text;
+
+    // Get surveys_choices
+    let surveys_choices = await query(
+      "SELECT * FROM surveys_choices WHERE survey_id = $1",
+      [survey.id]
+    );
+
+    survey["surveys_choices"] = [];
+
+    // Get surveys_choices_elements
+    for (let j = 0; j < surveys_choices.length; j++) {
+      let surveys_choices_elements = await query(
+        "SELECT id, text FROM surveys_choices_elements WHERE survey_choice_id = $1",
+        [surveys_choices[j].id]
+      );
+      survey["surveys_choices"].push({
+        question: surveys_choices[j].question,
+        surveys_choices_elements
+      });
+    }
+  }
+
+  return surveys[0];
+};
+
+module.exports = { create, getAll, getById, getAllAsSolver, getByIdAsSolver };

@@ -8,11 +8,14 @@ const { authorizeRoles } = require("../Security/Roles/index.js");
 router.get(
   "/",
   authorizeAndExtractToken,
-  authorizeRoles("user_creator"),
+  authorizeRoles("user_solver", "user_creator"),
   async (req, res, next) => {
-    let userId = req.state.decoded.userId;
+    let { userId, userRole } = req.state.decoded;
+    let surveys = undefined;
 
-    let surveys = await SurveysService.getAll(userId);
+    if (userRole == "user_creator")
+      surveys = await SurveysService.getAll(userId);
+    else surveys = await SurveysService.getAllAsSolver();
 
     res.status(200).json(surveys);
   }
@@ -97,13 +100,17 @@ router.post(
 router.get(
   "/:id",
   authorizeAndExtractToken,
-  authorizeRoles("user_creator"),
+  authorizeRoles("user_solver", "user_creator"),
   async (req, res, next) => {
-    let userId = req.state.decoded.userId;
+    let { userId, roleId } = req.state.decoded;
     let surveyId = req.params.id;
+    let surveys = undefined;
 
     try {
-      let surveys = await SurveysService.getById(userId, surveyId);
+      if (roleId == "user_creator")
+        surveys = await SurveysService.getById(userId, surveyId);
+      else surveys = await SurveysService.getByIdAsSolver(surveyId);
+
       res.status(200).json(surveys);
     } catch (err) {
       next(err);
