@@ -1,7 +1,7 @@
 version: "3.1"
 services:
   backend:
-    # image: rosudavidg/survket-backend
+    # image: rosudavidg/survket-backend:latest
     image: survket_backend
     depends_on:
       - database
@@ -13,6 +13,7 @@ services:
           memory: 50M
       restart_policy:
         condition: on-failure
+    # Pentru testare
     ports:
       - "8888:5000"
     environment:
@@ -27,6 +28,7 @@ services:
       JWT_SUBJECT: Authentication token
       JWT_AUDIENCE: survket_frontend
       JWT_EXPIRESIN: 1w
+      # TODO: docker secrets
       JWT_SECRET_KEY: myawesomeultrasecretkey
     secrets:
       - secret_database_user
@@ -37,7 +39,7 @@ services:
     volumes:
       - ./backend/:/usr/src/app
   database:
-    # image: rosudavidg/survket-database
+    # image: rosudavidg/survket-database:latest
     image: survket_database
     environment:
       POSTGRES_USER_FILE: /run/secrets/secret_database_user
@@ -49,6 +51,7 @@ services:
       - secret_database_db
     volumes:
       - volume_database:/var/lib/postgresql/data
+    # Pentru testare
     ports:
       - "54321:5432"
     networks:
@@ -74,8 +77,25 @@ services:
       - "5000"
     networks:
       - webnet
+  grafana:
+    image: grafana/grafana:latest
+    depends_on:
+      - database
+    ports:
+      - "3000:3000"
+    volumes:
+      - volume_grafana:/var/lib/grafana
+    environment:
+      GRAFANA_DB_HOST: database:5432
+      GRAFANA_USERNAME: backend
+      GRAFANA_PASSWORD: password
+      GRAFANA_DB_NAME: survket_db
+      GF_SECURITY_ADMIN_PASSWORD: password
+    networks:
+      - webnet
 volumes:
   volume_database:
+  volume_grafana:
 networks:
   webnet:
 secrets:
