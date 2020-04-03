@@ -35,7 +35,7 @@ services:
       - secret_database_password
       - secret_database_db
     networks:
-      - webnet
+      - webnetwork
     volumes:
       - ./backend/:/usr/src/app
   database:
@@ -55,7 +55,7 @@ services:
     ports:
       - "54321:5432"
     networks:
-      - webnet
+      - webnetwork
   email:
     # image: rosudavidg/survket-email:latest
     image: survket_email
@@ -73,10 +73,8 @@ services:
     secrets:
       - secret_email_address
       - secret_email_password
-    expose:
-      - "5000"
     networks:
-      - webnet
+      - webnetwork
   grafana:
     image: grafana/grafana:latest
     depends_on:
@@ -87,17 +85,22 @@ services:
       - volume_grafana:/var/lib/grafana
     environment:
       GRAFANA_DB_HOST: database:5432
-      GRAFANA_USERNAME: backend
-      GRAFANA_PASSWORD: password
-      GRAFANA_DB_NAME: survket_db
-      GF_SECURITY_ADMIN_PASSWORD: password
+      GRAFANA_USERNAME: /run/secrets/secret_database_user
+      GRAFANA_PASSWORD: /run/secrets/secret_database_password
+      GRAFANA_DB_NAME: /run/secrets/secret_database_db
+      GF_SECURITY_ADMIN_PASSWORD: /run/secrets/secret_grafana_password
     networks:
-      - webnet
+      - webnetwork
+    secrets:
+      - secret_grafana_password
+      - secret_database_user
+      - secret_database_password
+      - secret_database_db
 volumes:
   volume_database:
   volume_grafana:
 networks:
-  webnet:
+  webnetwork:
 secrets:
   secret_email_address:
     file: ./secrets/secret_email_address
@@ -109,3 +112,5 @@ secrets:
     file: ./secrets/secret_database_user
   secret_database_db:
     file: ./secrets/secret_database_db
+  secret_grafana_password:
+    file: ./secrets/secret_grafana_password
