@@ -25,6 +25,7 @@ router.post(
   authorizeAndExtractToken,
   authorizeRoles("admin", "support"),
   async (req, res, next) => {
+    let { userRole } = req.state.decoded;
     let { role_id } = req.body;
 
     try {
@@ -32,7 +33,23 @@ router.post(
         throw new ServerError("Field role_id is not defined.", 400);
       }
 
+      if (userRole === "support" && role_id === 1) {
+        throw new ServerError(
+          "Support user cannot create an admin account.",
+          401
+        );
+      }
+
+      if (![1, 2, 3, 4].includes(role_id)) {
+        throw new ServerError(
+          `Cannot create user with role_id = ${role_id}.`,
+          400
+        );
+      }
+
       await register(res, req, next, role_id);
+
+      res.sendStatus(201);
     } catch (err) {
       next(err);
     }
@@ -71,12 +88,12 @@ router.post("/login", async (req, res, next) => {
     validateFields({
       email: {
         value: email,
-        type: "email"
+        type: "email",
       },
       password: {
         value: password,
-        type: "password"
-      }
+        type: "password",
+      },
     });
 
     const token = await UsersService.authenticate(email, password);
@@ -94,43 +111,43 @@ register = async (res, req, next, role_id) => {
     email,
     password,
     date_of_birth,
-    gender
+    gender,
   } = req.body;
 
   try {
     validateFields({
       first_name: {
         value: first_name,
-        type: "alpha"
+        type: "alpha",
       },
       last_name: {
         value: last_name,
-        type: "alpha"
+        type: "alpha",
       },
       role_id: {
         value: role_id,
-        type: "int"
+        type: "int",
       },
       date_of_birth: {
         value: date_of_birth,
-        type: "date"
+        type: "date",
       },
       email: {
         value: email,
-        type: "email"
+        type: "email",
       },
       password: {
         value: password,
-        type: "password"
-      }
+        type: "password",
+      },
     });
 
     if (gender !== undefined) {
       validateFields({
         gender: {
           value: gender,
-          type: "gender"
-        }
+          type: "gender",
+        },
       });
     }
 
