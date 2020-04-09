@@ -13,11 +13,15 @@ router.get(
     let { userId, userRole } = req.state.decoded;
     let surveys = undefined;
 
-    if (userRole == "user_creator")
-      surveys = await SurveysService.getAll(userId);
-    else surveys = await SurveysService.getAllAsSolver();
+    try {
+      if (userRole == "user_creator")
+        surveys = await SurveysService.getAll(userId);
+      else surveys = await SurveysService.getAllAsSolver();
 
-    res.status(200).json(surveys);
+      res.status(200).json(surveys);
+    } catch (err) {
+      next(err);
+    }
   }
 );
 
@@ -33,28 +37,28 @@ router.post(
       validateFields({
         name: {
           value: name,
-          type: "ascii"
+          type: "ascii",
         },
         reward: {
           value: reward,
-          type: "int"
+          type: "int",
         },
         surveys_texts: {
           value: surveys_texts,
-          type: "array"
+          type: "array",
         },
         surveys_choices: {
           value: surveys_choices,
-          type: "array"
-        }
+          type: "array",
+        },
       });
 
       for (let i = 0; i < surveys_texts.length; i++) {
         validateFields({
           question: {
             value: surveys_texts[i].question,
-            type: "ascii"
-          }
+            type: "ascii",
+          },
         });
       }
 
@@ -62,12 +66,12 @@ router.post(
         validateFields({
           question: {
             value: surveys_choices[i].question,
-            type: "ascii"
+            type: "ascii",
           },
           surveys_choices_elements: {
             value: surveys_choices[i].surveys_choices_elements,
-            type: "array"
-          }
+            type: "array",
+          },
         });
 
         let elements = surveys_choices[i].surveys_choices_elements;
@@ -76,8 +80,8 @@ router.post(
           validateFields({
             text: {
               value: elements[j].text,
-              type: "ascii"
-            }
+              type: "ascii",
+            },
           });
         }
       }
@@ -131,24 +135,24 @@ router.post(
       validateFields({
         surveys_texts: {
           value: surveys_texts,
-          type: "array"
+          type: "array",
         },
         surveys_choices: {
           value: surveys_choices,
-          type: "array"
-        }
+          type: "array",
+        },
       });
 
       for (let i = 0; i < surveys_texts.length; i++) {
         validateFields({
           id: {
             value: surveys_texts[i].id,
-            type: "int"
+            type: "int",
           },
           answer: {
             value: surveys_texts[i].answer,
-            type: "ascii"
-          }
+            type: "ascii",
+          },
         });
       }
 
@@ -156,12 +160,12 @@ router.post(
         validateFields({
           id: {
             value: surveys_choices[i].id,
-            type: "int"
+            type: "int",
           },
           survey_choice_element_id: {
             value: surveys_choices[i].survey_choice_element_id,
-            type: "int"
-          }
+            type: "int",
+          },
         });
       }
 
