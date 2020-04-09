@@ -8,7 +8,7 @@ const { authorizeRoles } = require("../Security/Roles/index.js");
 router.get(
   "/",
   authorizeAndExtractToken,
-  authorizeRoles("user_solver", "user_creator"),
+  authorizeRoles("user_solver", "user_creator", "admin", "support"),
   async (req, res, next) => {
     let { userId, userRole } = req.state.decoded;
     let surveys = undefined;
@@ -104,7 +104,7 @@ router.post(
 router.get(
   "/:id",
   authorizeAndExtractToken,
-  authorizeRoles("user_solver", "user_creator"),
+  authorizeRoles("user_solver", "user_creator", "admin", "support"),
   async (req, res, next) => {
     let { userId, roleId } = req.state.decoded;
     let surveyId = req.params.id;
