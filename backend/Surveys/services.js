@@ -38,10 +38,10 @@ const create = async (userId, name, reward, surveys_texts, surveys_choices) => {
   }
 };
 
-const getAll = async userId => {
+const getAll = async (userId) => {
   // Get surveys
   let surveys = await query("SELECT * FROM surveys WHERE creator = $1", [
-    userId
+    userId,
   ]);
 
   for (let i = 0; i < surveys.length; i++) {
@@ -71,7 +71,7 @@ const getAll = async userId => {
       );
       survey["surveys_choices"].push({
         question: surveys_choices[j].question,
-        surveys_choices_elements
+        surveys_choices_elements,
       });
     }
   }
@@ -110,7 +110,7 @@ const getAllAsSolver = async () => {
       );
       survey["surveys_choices"].push({
         question: surveys_choices[j].question,
-        surveys_choices_elements
+        surveys_choices_elements,
       });
     }
   }
@@ -156,7 +156,7 @@ const getById = async (userId, surveyId) => {
       survey["surveys_choices"].push({
         id: surveys_choices[j].id,
         question: surveys_choices[j].question,
-        surveys_choices_elements
+        surveys_choices_elements,
       });
     }
   }
@@ -164,7 +164,7 @@ const getById = async (userId, surveyId) => {
   return surveys[0];
 };
 
-const getByIdAsSolver = async surveyId => {
+const getByIdAsSolver = async (surveyId) => {
   // Get surveys
   let surveys = await query("SELECT * FROM surveys WHERE id = $1", [surveyId]);
 
@@ -199,7 +199,7 @@ const getByIdAsSolver = async surveyId => {
       survey["surveys_choices"].push({
         id: surveys_choices[j].id,
         question: surveys_choices[j].question,
-        surveys_choices_elements
+        surveys_choices_elements,
       });
     }
   }
@@ -232,7 +232,7 @@ let solve = async (surveyId, userId, surveys_text, surveys_choices) => {
         [
           solved_survey_id,
           surveys_choices[i].id,
-          surveys_choices[i].survey_choice_element_id
+          surveys_choices[i].survey_choice_element_id,
         ]
       );
     }
@@ -243,11 +243,102 @@ let solve = async (surveyId, userId, surveys_text, surveys_choices) => {
   }
 };
 
+let getStats = async (userId, surveyId) => {
+  let rows = await query(
+    "SELECT * FROM surveys WHERE id = $1 AND creator = $2",
+    [surveyId, userId]
+  );
+
+  let survey = rows[0];
+
+  let surveys_texts = await query(
+    "SELECT id, question FROM surveys_texts WHERE survey_id = $1",
+    [surveyId]
+  );
+
+  let surveys_choices = await query(
+    "SELECT id, question FROM surveys_choices WHERE survey_id = $1",
+    [surveyId]
+  );
+
+  let solved_surveys_ids = await query(
+    "SELECT id FROM solved_surveys WHERE survey_id = $1",
+    [surveyId]
+  );
+
+  let surveys_texts_stats = [];
+
+  for (let i = 0; i < surveys_texts.length; i++) {
+    let survey_text = surveys_texts[i];
+    let survey_text_stats = {
+      id: survey_text.id,
+      question: survey_text.question,
+    };
+
+    let answers = [];
+
+    for (let j = 0; j < solved_surveys_ids.length; j++) {
+      rows = await query(
+        "SELECT answer FROM solved_surveys_texts WHERE solved_survey_id = $1 AND survey_text_id = $2",
+        [solved_surveys_ids[j].id, survey_text.id]
+      );
+      answers.push(rows[0].answer);
+    }
+
+    survey_text_stats.answers = answers;
+
+    surveys_texts_stats.push(survey_text_stats);
+  }
+
+  let surveys_choices_stats = [];
+
+  for (let i = 0; i < surveys_choices.length; i++) {
+    let survey_choice = surveys_choices[i];
+    let survey_choice_stats = {
+      id: survey_choice.id,
+      question: survey_choice.question,
+    };
+
+    let survey_choice_elements = await query(
+      "SELECT id, text FROM surveys_choices_elements WHERE survey_choice_id = $1",
+      [survey_choice.id]
+    );
+
+    let answers = [];
+
+    for (let j = 0; j < survey_choice_elements.length; j++) {
+      let answer = {
+        id: survey_choice_elements[j].id,
+        text: survey_choice_elements[j].text,
+      };
+
+      let count = await query(
+        "SELECT COUNT(*) FROM solved_surveys_choices WHERE survey_choice_id = $1 AND survey_choice_element_id = $2",
+        [survey_choice.id, survey_choice_elements[j].id]
+      );
+
+      answer.count = Number(count[0].count);
+
+      answers.push(answer);
+    }
+
+    survey_choice_stats.answers = answers;
+
+    surveys_choices_stats.push(survey_choice_stats);
+  }
+
+  survey.surveys_texts_stats = surveys_texts_stats;
+  survey.surveys_choices_stats = surveys_choices_stats;
+
+  return survey;
+};
+
 module.exports = {
   create,
   getAll,
   getById,
   getAllAsSolver,
   getByIdAsSolver,
-  solve
+  solve,
+  getStats,
 };
