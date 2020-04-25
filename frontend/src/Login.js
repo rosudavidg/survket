@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import "./Login.css";
@@ -6,8 +7,38 @@ import "./Login.css";
 const Login = () => {
   const history = useHistory();
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const onClickRegister = () => {
     history.push("/register");
+  };
+
+  const onClickLogin = () => {
+    axios
+      .post("http://192.168.100.6:8888/users/login", {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        let jwt_token = res.data;
+
+        localStorage.setItem("token", jwt_token);
+
+        history.push("/");
+      })
+      .catch((e) => {
+        setPassword("");
+        alert("Login failed!");
+      });
+  };
+
+  const onChangeEmail = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
   };
 
   return (
@@ -16,13 +47,26 @@ const Login = () => {
         <title>Login</title>
       </Helmet>
       <form className="login-form">
-        <input id="login-username" className="login-username" type="text" placeholder="Email"></input>
-        <input id="login-password" className="login-password" type="password" placeholder="Password"></input>
-        <input id="login-submit" className="login-submit" type="submit" value="Sign in"></input>
+        <input
+          id="login-username"
+          className="login-username"
+          type="text"
+          placeholder="Email"
+          onChange={onChangeEmail}
+        ></input>
+        <input
+          id="login-password"
+          className="login-password"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={onChangePassword}
+        ></input>
+        <input id="login-submit" className="login-submit" type="button" value="Sign in" onClick={onClickLogin}></input>
         <input
           id="login-register"
           className="login-register"
-          type="submit"
+          type="button"
           value="Register"
           onClick={onClickRegister}
         ></input>

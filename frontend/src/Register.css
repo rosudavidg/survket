@@ -1,12 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Signika:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap");
 .register-form {
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* min-height: 200px; */
   justify-content: center;
   align-self: center;
   align-items: center;
   align-content: center;
+  font-family: "Work Sans", sans-serif;
+  letter-spacing: 1px;
 }
 
 .register-email,
@@ -30,6 +34,7 @@
   background-color: white;
   transition: 0.5s;
   outline: none;
+  border-radius: 15px;
 }
 
 .register-submit {
@@ -42,6 +47,8 @@
   margin: 24px 2px;
   cursor: pointer;
   border: 3px solid #4caf50;
+  font-family: "Work Sans", sans-serif;
+  font-size: x-large;
 }
 
 .register-back {
@@ -54,6 +61,8 @@
   margin: 24px 2px;
   cursor: pointer;
   border: 3px solid #4397b1;
+  font-family: "Work Sans", sans-serif;
+  font-size: x-large;
 }
 
 label {
@@ -80,5 +89,16 @@ label {
 
 .register-submit:hover,
 .register-back:hover {
-  border: 3px solid beige;
+  border: 3px solid rgb(42, 42, 42);
+}
+
+.register-email:focus,
+.register-password:focus,
+.register-first-name:focus,
+.register-last-name:focus,
+.register-gender:focus,
+.register-date:focus,
+.register-submit:focus,
+.register-back:focus {
+  border: 3px solid #4caf50;
 }
