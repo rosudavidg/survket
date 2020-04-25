@@ -1,0 +1,30 @@
+.header {
+  background-color: rgb(42, 42, 42);
+  min-height: 60px;
+  color: beige;
+  font-size: xx-large;
+  font-weight: 800;
+  letter-spacing: 3px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 2px 4px 10px grey;
+  position: relative;
+  z-index: 1;
+  flex-grow: 0;
+}
+
+.header-title {
+  display: flex;
+  margin-left: 20px;
+  justify-content: center;
+  text-shadow: 4px 4px #000000;
+  cursor: pointer;
+}
+
+.header-nav {
+  display: flex;
+  flex: 1;
+  margin-right: 20px;
+  justify-content: flex-end;
+}

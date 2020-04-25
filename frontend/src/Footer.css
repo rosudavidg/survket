@@ -1,0 +1,40 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(120, 120, 120);
+  height: 80px;
+  width: 100%;
+  color: beige;
+  flex: none;
+}
+
+.footer-contact {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 60%;
+}
+
+.footer-copyright {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: small;
+  background-color: rgb(60, 60, 60);
+  height: 40%;
+  letter-spacing: 1px;
+}
+
+.footer-facebook,
+.footer-email {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.footer-facebook-text,
+.footer-facebook-email {
+  margin-left: 6px;
+  letter-spacing: 2px;
+}

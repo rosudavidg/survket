@@ -1,0 +1,6 @@
+.content {
+  background-color: beige;
+  flex: 1;
+  padding: 20px;
+  /* overflow: auto; */
+}
