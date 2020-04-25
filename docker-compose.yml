@@ -80,7 +80,7 @@ services:
     depends_on:
       - database
     ports:
-      - "3000:3000"
+      - "30009:3000"
     volumes:
       - volume_grafana:/var/lib/grafana
     environment:
