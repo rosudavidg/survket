@@ -1,0 +1,14 @@
+.survey-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  width: 90%;
+  margin: auto;
+  justify-self: center;
+  align-self: center;
+  justify-content: center;
+  flex-flow: row wrap;
+}
+
+.survey-list > * {
+  margin: 20px 20px;
+}
