@@ -1,5 +1,8 @@
-.nav-signout {
-  margin: 5px;
+.nav-signout,
+.nav-home,
+.nav-contact,
+.nav-faq {
+  margin-left: 5px;
   flex: none;
   box-sizing: border-box;
   -webkit-transition: 0.5s;
@@ -15,10 +18,13 @@
   padding: 8px;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 1px 1px 10px grey;
-  border-radius: 15px;
+  box-shadow: 1px 1px 10px rgb(60, 60, 60);
+  border-radius: 10px;
 }
 
-.nav-signout:hover {
+.nav-signout:hover,
+.nav-home:hover,
+.nav-contact:hover,
+.nav-faq:hover {
   box-shadow: 1px 1px 10px beige;
 }
