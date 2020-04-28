@@ -25,6 +25,7 @@ const SurveyList = (props) => {
   return (
     <div className="survey-list">
       {newSurveyCardIsVisible && <NewSurveyCard />}
+      {!newSurveyCardIsVisible && props.surveys.length === 0 && <div>No surveys for you 😕</div>}
       {props.surveys.map((survey) => {
         return (
           <Survey key={survey.id} title={survey.name} creator={survey.creator} reward={survey.reward} id={survey.id} />
