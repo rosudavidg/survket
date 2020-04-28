@@ -102,11 +102,11 @@ register = async (res, req, next, role) => {
     validateFields({
       first_name: {
         value: first_name,
-        type: "alpha",
+        type: "ascii",
       },
       last_name: {
         value: last_name,
-        type: "alpha",
+        type: "ascii",
       },
       role: {
         value: role,
