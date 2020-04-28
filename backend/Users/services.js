@@ -9,13 +9,37 @@ const getAll = async () => {
   );
 };
 
-const createUser = async (role_id, email, password, first_name, last_name, gender, date_of_birth) => {
+const createUser = async (role, email, password, first_name, last_name, gender, date_of_birth) => {
   const hashedPassword = await hash(password);
+  let role_id = 0;
 
-  return await query(
-    "INSERT INTO users (role_id, email, password, first_name, last_name, gender, date_of_birth) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-    [role_id, email, hashedPassword, first_name, last_name, gender, date_of_birth]
-  );
+  switch (role) {
+    case "admin":
+      role_id = 1;
+      break;
+    case "support":
+      role_id = 2;
+      break;
+    case "user_solver":
+      role_id = 3;
+      break;
+    case "user_creator":
+      role_id = 4;
+      break;
+  }
+
+  try {
+    return await query(
+      "INSERT INTO users (role_id, email, password, first_name, last_name, gender, date_of_birth) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+      [role_id, email, hashedPassword, first_name, last_name, gender, date_of_birth]
+    );
+  } catch (e) {
+    if (e.message.includes("users_email_key")) {
+      throw new ServerError("Email is already registered!", 400);
+    } else {
+      throw new ServerError("Database error.", 500);
+    }
+  }
 };
 
 const authenticate = async (email, password) => {
