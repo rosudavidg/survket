@@ -1,6 +1,6 @@
 .header {
   background-color: rgb(42, 42, 42);
-  min-height: 60px;
+  /* min-height: 1000px; */
   color: beige;
   font-size: xx-large;
   font-weight: 800;
@@ -12,6 +12,8 @@
   position: relative;
   z-index: 1;
   flex-grow: 0;
+  flex-wrap: wrap;
+  padding: 10px;
 }
 
 .header-title {
@@ -25,6 +27,7 @@
 .header-nav {
   display: flex;
   flex: 1;
+  /* margin: auto; */
   margin-right: 20px;
   justify-content: flex-end;
 }

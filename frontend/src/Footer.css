@@ -33,6 +33,11 @@
   align-items: center;
 }
 
+a {
+  text-decoration: none;
+  color: beige;
+}
+
 .footer-facebook-text,
 .footer-facebook-email {
   margin-left: 6px;

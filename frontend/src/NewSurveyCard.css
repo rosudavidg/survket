@@ -72,7 +72,7 @@
 }
 
 .new-survey-solve:hover {
-  border: 3px solid beige;
+  box-shadow: 1px 1px 10px beige;
 }
 
 .new-survey-reward-coins,
