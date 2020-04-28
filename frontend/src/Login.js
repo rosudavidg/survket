@@ -47,18 +47,13 @@ const Login = () => {
         <title>Login</title>
       </Helmet>
       <form className="login-form">
-        <input
-          id="login-username"
-          className="login-username"
-          type="text"
-          placeholder="Email"
-          onChange={onChangeEmail}
-        ></input>
+        <label className="login-label">Email:</label>
+        <input id="login-username" className="login-username" type="text" onChange={onChangeEmail}></input>
+        <label className="login-label">Password:</label>
         <input
           id="login-password"
           className="login-password"
           type="password"
-          placeholder="Password"
           value={password}
           onChange={onChangePassword}
         ></input>
