@@ -6,19 +6,23 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const FooterFacebook = () => {
   return (
-    <div className="footer-facebook">
-      <FontAwesomeIcon icon={faFacebook} color="beige" />
-      <div className="footer-facebook-text">Like on Facebook</div>
-    </div>
+    <a href="https://www.facebook.com/survket">
+      <div className="footer-facebook">
+        <FontAwesomeIcon icon={faFacebook} color="beige" />
+        <div className="footer-facebook-text">Like on Facebook</div>
+      </div>
+    </a>
   );
 };
 
 const FooterEmail = () => {
   return (
-    <div className="footer-email">
-      <FontAwesomeIcon icon={faEnvelope} />
-      <div className="footer-facebook-email">Email</div>
-    </div>
+    <a href="mailto:survket@gmail.com">
+      <div className="footer-email">
+        <FontAwesomeIcon icon={faEnvelope} />
+        <div className="footer-facebook-email">Email</div>
+      </div>
+    </a>
   );
 };
 
