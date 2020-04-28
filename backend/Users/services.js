@@ -9,28 +9,12 @@ const getAll = async () => {
   );
 };
 
-const createUser = async (
-  role_id,
-  email,
-  password,
-  first_name,
-  last_name,
-  gender,
-  date_of_birth
-) => {
+const createUser = async (role_id, email, password, first_name, last_name, gender, date_of_birth) => {
   const hashedPassword = await hash(password);
 
   return await query(
     "INSERT INTO users (role_id, email, password, first_name, last_name, gender, date_of_birth) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-    [
-      role_id,
-      email,
-      hashedPassword,
-      first_name,
-      last_name,
-      gender,
-      date_of_birth
-    ]
+    [role_id, email, hashedPassword, first_name, last_name, gender, date_of_birth]
   );
 };
 
@@ -41,10 +25,7 @@ const authenticate = async (email, password) => {
   );
 
   if (queryResult.length == 0) {
-    throw new ServerError(
-      `Utilizatorul cu emailul ${email} nu exista in sistem!`,
-      400
-    );
+    throw new ServerError(`Utilizatorul cu emailul ${email} nu exista in sistem!`, 400);
   }
 
   const storedPassword = queryResult[0].password;
@@ -62,15 +43,19 @@ const authenticate = async (email, password) => {
 };
 
 const AddCompany = async (userId, companyName) => {
-  await query("INSERT INTO creator_users (id, company_name) VALUES ($1, $2)", [
-    userId,
-    companyName
-  ]);
+  await query("INSERT INTO creator_users (id, company_name) VALUES ($1, $2)", [userId, companyName]);
+};
+
+const getMe = async (userId, userRole) => {
+  const res = (await query("SELECT first_name, last_name FROM users WHERE id = $1", [userId]))[0];
+
+  return { name: res.first_name + " " + res.last_name, coins: 100 };
 };
 
 module.exports = {
   getAll,
   createUser,
   authenticate,
-  AddCompany
+  AddCompany,
+  getMe,
 };

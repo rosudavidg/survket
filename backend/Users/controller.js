@@ -6,70 +6,59 @@ const router = express.Router();
 const { authorizeRoles } = require("../Security/Roles/index.js");
 const { ServerError } = require("../errors");
 
-router.get(
-  "/",
-  authorizeAndExtractToken,
-  authorizeRoles("admin", "support"),
-  async (req, res, next) => {
-    try {
-      const users = await UsersService.getAll();
-      res.json(users);
-    } catch (err) {
-      next(err);
-    }
+router.get("/", authorizeAndExtractToken, authorizeRoles("admin", "support"), async (req, res, next) => {
+  try {
+    const users = await UsersService.getAll();
+    res.json(users);
+  } catch (err) {
+    next(err);
   }
-);
+});
 
-router.post(
-  "/",
-  authorizeAndExtractToken,
-  authorizeRoles("admin", "support"),
-  async (req, res, next) => {
-    let { userRole } = req.state.decoded;
-    let { role_id } = req.body;
+router.get("/me", authorizeAndExtractToken, async (req, res, next) => {
+  let { userId, userRole } = req.state.decoded;
 
-    try {
-      if (role_id === undefined) {
-        throw new ServerError("Field role_id is not defined.", 400);
-      }
-
-      if (userRole === "support" && role_id === 1) {
-        throw new ServerError(
-          "Support user cannot create an admin account.",
-          401
-        );
-      }
-
-      if (![1, 2, 3, 4].includes(role_id)) {
-        throw new ServerError(
-          `Cannot create user with role_id = ${role_id}.`,
-          400
-        );
-      }
-
-      await register(res, req, next, role_id);
-
-      res.sendStatus(201);
-    } catch (err) {
-      next(err);
-    }
+  try {
+    const users = await UsersService.getMe(userId, userRole);
+    res.json(users);
+  } catch (err) {
+    next(err);
   }
-);
+});
+
+router.post("/", authorizeAndExtractToken, authorizeRoles("admin", "support"), async (req, res, next) => {
+  let { userRole } = req.state.decoded;
+  let { role_id } = req.body;
+
+  try {
+    if (role_id === undefined) {
+      throw new ServerError("Field role_id is not defined.", 400);
+    }
+
+    if (userRole === "support" && role_id === 1) {
+      throw new ServerError("Support user cannot create an admin account.", 401);
+    }
+
+    if (![1, 2, 3, 4].includes(role_id)) {
+      throw new ServerError(`Cannot create user with role_id = ${role_id}.`, 400);
+    }
+
+    await register(res, req, next, role_id);
+
+    res.sendStatus(201);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.post("/register", async (req, res, next) => {
   let { role_id, company_name } = req.body;
   try {
-    if (role_id === undefined)
-      throw new ServerError("Field role_id is not defined!", 400);
+    if (role_id === undefined) throw new ServerError("Field role_id is not defined!", 400);
 
-    if (![3, 4].includes(role_id))
-      throw new ServerError(
-        `Cannot create user with role_id = ${role_id}!`,
-        400
-      );
+    if (![3, 4].includes(role_id)) throw new ServerError(`Cannot create user with role_id = ${role_id}!`, 400);
 
-    if (role_id == 4 && company_name === undefined)
-      throw new ServerError("Field company_name is not defined!", 400);
+    if (role_id == 4 && company_name === undefined) throw new ServerError("Field company_name is not defined!", 400);
 
     let userId = await register(res, req, next, role_id);
 
@@ -105,14 +94,7 @@ router.post("/login", async (req, res, next) => {
 });
 
 register = async (res, req, next, role_id) => {
-  let {
-    first_name,
-    last_name,
-    email,
-    password,
-    date_of_birth,
-    gender,
-  } = req.body;
+  let { first_name, last_name, email, password, date_of_birth, gender } = req.body;
 
   try {
     validateFields({
@@ -153,15 +135,7 @@ register = async (res, req, next, role_id) => {
 
     gender = gender || null;
 
-    let rows = await UsersService.createUser(
-      role_id,
-      email,
-      password,
-      first_name,
-      last_name,
-      gender,
-      date_of_birth
-    );
+    let rows = await UsersService.createUser(role_id, email, password, first_name, last_name, gender, date_of_birth);
 
     // TODO: Generate confirmation token
 
