@@ -84,7 +84,7 @@
 .survey-solve:hover,
 .survey-results:hover,
 .survey-delete:hover {
-  border: 3px solid beige;
+  box-shadow: 1px 1px 10px beige;
 }
 
 .survey-reward-coins,
