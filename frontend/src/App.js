@@ -9,6 +9,7 @@ import SurveySolve from "./SurveySolve";
 import SurveyStats from "./SurveyStats";
 import { Helmet } from "react-helmet";
 import { isUserAuthenticated, getUserRole } from "./Auth.js";
+import Contact from "./Contact";
 import "./App.css";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
@@ -86,6 +87,7 @@ function App() {
                   }
                 }}
               />
+              <Route exact path="/contact" component={Contact} />
               <Route
                 path="/"
                 render={() => {
