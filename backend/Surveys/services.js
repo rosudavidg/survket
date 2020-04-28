@@ -78,9 +78,14 @@ const getAll = async (userId) => {
   return surveys;
 };
 
-const getAllAsSolver = async () => {
+const getAllAsSolver = async (userId) => {
   // Get surveys
   let surveys = await query("SELECT * FROM surveys");
+  let solved_surveys = await query("SELECT survey_id FROM solved_surveys WHERE user_id = $1", [userId]);
+
+  const solved_ids = solved_surveys.map((e) => e.survey_id);
+
+  surveys = surveys.filter((e) => !solved_ids.includes(e.id));
 
   for (let i = 0; i < surveys.length; i++) {
     let survey = surveys[i];
@@ -250,7 +255,9 @@ let getStats = async (userId, surveyId) => {
         "SELECT answer FROM solved_surveys_texts WHERE solved_survey_id = $1 AND survey_text_id = $2",
         [solved_surveys_ids[j].id, survey_text.id]
       );
-      answers.push(rows[0].answer);
+      if (rows.length != 0) {
+        answers.push(rows[0].answer);
+      }
     }
 
     survey_text_stats.answers = answers;
