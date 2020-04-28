@@ -1,0 +1,95 @@
+@import url("https://fonts.googleapis.com/css2?family=Signika:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap");
+
+.solver-survey {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: "Work Sans", sans-serif;
+  font-size: large;
+  max-width: 600px;
+  margin: auto;
+  color: beige;
+}
+
+.solver-survey > * {
+  margin-top: 30px;
+}
+
+.solver-survey-text,
+.solver-survey-choice {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(42, 42, 42);
+  border-radius: 15px;
+  padding: 20px 20px;
+  -webkit-transition: 0.5s;
+  box-shadow: 1px 1px 10px grey;
+}
+
+.solver-survey-text:hover,
+.solver-survey-choice:hover {
+  box-shadow: 1px 1px 10px #4caf50;
+}
+
+.solver-survey-text-input,
+.solver-submit,
+.solver-back {
+  margin-top: 20px;
+  box-sizing: border-box;
+  outline: none;
+  padding: 12px 20px;
+  font-size: large;
+  border: 3px solid rgb(160, 160, 160);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  border-radius: 15px;
+}
+
+.solver-submit {
+  -webkit-appearance: none;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 20px 2px;
+  cursor: pointer;
+  border: 3px solid #4caf50;
+}
+.solver-back {
+  -webkit-appearance: none;
+  background-color: #4397b1;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 20px 2px;
+  cursor: pointer;
+  border: 3px solid #4397b1;
+}
+
+.solver-submit:hover,
+.solver-back:hover {
+  /* border: 3px solid rgb(42, 42, 42); */
+  /* box-shadow: 1px 1px 10px rgb(42, 42, 42); */
+  box-shadow: 1px 1px 10px grey;
+}
+
+.solver-survey-text-input:focus {
+  border: 3px solid #4caf50;
+}
+
+.solver-survey-choice-option {
+  margin-top: 10px;
+}
+
+.solver-survey-choice-option-text {
+  margin-left: 10px;
+}
+
+.solver-survey-choice-option-text-radio {
+  height: 12px;
+  width: 12px;
+}
