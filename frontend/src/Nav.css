@@ -1,0 +1,24 @@
+.nav-signout {
+  margin: 5px;
+  flex: none;
+  box-sizing: border-box;
+  -webkit-transition: 0.5s;
+  -webkit-appearance: none;
+  background-color: white;
+  transition: 0.5s;
+  outline: none;
+  background-color: rgb(100, 100, 100);
+  border: 3px solid rgb(100, 100, 100);
+  color: beige;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 1px 1px 10px grey;
+  border-radius: 15px;
+}
+
+.nav-signout:hover {
+  box-shadow: 1px 1px 10px beige;
+}
