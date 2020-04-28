@@ -80,3 +80,13 @@ CREATE TABLE IF NOT EXISTS solved_surveys_choices (
     survey_choice_id INTEGER REFERENCES surveys_choices(id) ON DELETE CASCADE,
     survey_choice_element_id INTEGER REFERENCES surveys_choices_elements(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS questions (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR (50) NOT NULL,
+    subject VARCHAR (50) NOT NULL,
+    message VARCHAR (512) NOT NULL,
+    answer VARCHAR (512) NOT NULL,
+    answered BOOLEAN DEFAULT FALSE,
+    is_faq BOOLEAN DEFAULT FALSE
+);
