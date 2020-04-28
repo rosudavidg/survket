@@ -5,8 +5,10 @@ import Login from "./Login";
 import Footer from "./Footer";
 import Register from "./Register";
 import Home from "./Home";
+import SurveySolve from "./SurveySolve";
+import SurveyStats from "./SurveyStats";
 import { Helmet } from "react-helmet";
-import { isUserAuthenticated } from "./Auth.js";
+import { isUserAuthenticated, getUserRole } from "./Auth.js";
 import "./App.css";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
@@ -45,10 +47,50 @@ function App() {
               />
               <Route
                 exact
+                path="/solve/:id"
+                render={(props) => {
+                  if (isUserAuthenticated(localStorage.getItem("token"))) {
+                    if (getUserRole(localStorage.getItem("token")) === "user_solver") {
+                      return <SurveySolve {...props} />;
+                    } else {
+                      return <Redirect to="/"></Redirect>;
+                    }
+                  } else {
+                    return <Redirect to="/login"></Redirect>;
+                  }
+                }}
+              />
+              <Route
+                exact
+                path="/stats/:id"
+                render={(props) => {
+                  if (isUserAuthenticated(localStorage.getItem("token"))) {
+                    if (getUserRole(localStorage.getItem("token")) === "user_creator") {
+                      return <SurveyStats {...props} />;
+                    } else {
+                      return <Redirect to="/"></Redirect>;
+                    }
+                  } else {
+                    return <Redirect to="/login"></Redirect>;
+                  }
+                }}
+              />
+              <Route
+                exact
                 path="/"
                 render={() => {
                   if (isUserAuthenticated(localStorage.getItem("token"))) {
                     return <Home />;
+                  } else {
+                    return <Redirect to="/login"></Redirect>;
+                  }
+                }}
+              />
+              <Route
+                path="/"
+                render={() => {
+                  if (isUserAuthenticated(localStorage.getItem("token"))) {
+                    return <Redirect to="/"></Redirect>;
                   } else {
                     return <Redirect to="/login"></Redirect>;
                   }
