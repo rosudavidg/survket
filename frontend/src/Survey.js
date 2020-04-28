@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
+import { useHistory } from "react-router-dom";
 import { getUserRole } from "./Auth.js";
 import "./Survey.css";
 
 const Survey = (props) => {
+  const history = useHistory();
   const [canViewResults, setCanViewResults] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
   const [canSolve, setCanSolve] = useState(false);
@@ -24,6 +26,14 @@ const Survey = (props) => {
     }
   }, []);
 
+  const onClickSolve = () => {
+    history.push(`/solve/${props.id}`);
+  };
+
+  const onClickResults = () => {
+    history.push(`/stats/${props.id}`);
+  };
+
   return (
     <div className="survey">
       <div className="survey-title">{props.title}</div>
@@ -33,8 +43,16 @@ const Survey = (props) => {
         </div>
         <div className="survey-reward-value">{props.reward}</div>
       </div>
-      {canSolve && <div className="survey-solve">Complete survey!</div>}
-      {canViewResults && <div className="survey-results">View results</div>}
+      {canSolve && (
+        <div className="survey-solve" onClick={onClickSolve}>
+          Complete survey!
+        </div>
+      )}
+      {canViewResults && (
+        <div className="survey-results" onClick={onClickResults}>
+          View results
+        </div>
+      )}
       {canDelete && <div className="survey-delete">Delete survey</div>}
       <div className="survey-creator">Created for you by {props.creator}</div>
     </div>
