@@ -26,7 +26,9 @@ const SurveyList = (props) => {
     <div className="survey-list">
       {newSurveyCardIsVisible && <NewSurveyCard />}
       {props.surveys.map((survey) => {
-        return <Survey key={survey.id} title={survey.name} creator={survey.creator} reward={survey.reward} />;
+        return (
+          <Survey key={survey.id} title={survey.name} creator={survey.creator} reward={survey.reward} id={survey.id} />
+        );
       })}
     </div>
   );
