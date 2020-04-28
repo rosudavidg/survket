@@ -172,4 +172,22 @@ router.get("/:id/stats", authorizeAndExtractToken, authorizeRoles("user_creator"
   }
 });
 
+router.delete(
+  "/:id",
+  authorizeAndExtractToken,
+  authorizeRoles("user_creator", "admin", "support"),
+  async (req, res, next) => {
+    let { userId, userRole } = req.state.decoded;
+    let surveyId = req.params.id;
+
+    try {
+      await SurveysService.deleteSurvey(userId, userRole, surveyId);
+
+      res.sendStatus(200);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 module.exports = router;

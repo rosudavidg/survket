@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
 import { useHistory } from "react-router-dom";
 import { getUserRole } from "./Auth.js";
+import axios from "axios";
 import "./Survey.css";
 
 const Survey = (props) => {
@@ -34,6 +35,22 @@ const Survey = (props) => {
     history.push(`/stats/${props.id}`);
   };
 
+  const onClickDelete = async () => {
+    const jwt_token = localStorage.getItem("token");
+    let res;
+    try {
+      res = await axios.delete(`http://192.168.100.6:8888/surveys/${props.id}`, {
+        headers: {
+          Authorization: `Bearer ${jwt_token}`,
+        },
+      });
+      alert("Deleted!");
+      window.location.reload();
+    } catch (e) {
+      alert("Get user details failed.");
+    }
+  };
+
   return (
     <div className="survey">
       <div className="survey-title">{props.title}</div>
@@ -53,7 +70,11 @@ const Survey = (props) => {
           View results
         </div>
       )}
-      {canDelete && <div className="survey-delete">Delete survey</div>}
+      {canDelete && (
+        <div className="survey-delete" onClick={onClickDelete}>
+          Delete survey
+        </div>
+      )}
       <div className="survey-creator">Created for you by {props.creator}</div>
     </div>
   );

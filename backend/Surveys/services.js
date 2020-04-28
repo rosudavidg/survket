@@ -308,6 +308,16 @@ let getStats = async (userId, surveyId) => {
   return survey;
 };
 
+let deleteSurvey = async (userId, userRole, surveyId) => {
+  if (userRole === "admin") {
+    await query("DELETE FROM surveys WHERE id = $1", [surveyId]);
+  } else if (userRole === "user_creator") {
+    const res = await query("DELETE FROM surveys WHERE id = $1 AND creator = $2", [surveyId, userId]);
+  } else {
+    throw new ServerError("Unauthorized", 401);
+  }
+};
+
 module.exports = {
   create,
   getAll,
@@ -316,4 +326,5 @@ module.exports = {
   getByIdAsSolver,
   solve,
   getStats,
+  deleteSurvey,
 };
