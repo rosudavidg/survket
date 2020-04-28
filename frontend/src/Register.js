@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet";
+import axios from "axios";
 
 const Error = (props) => {
   return (
@@ -22,19 +23,53 @@ const Register = () => {
   const [passwordRepeat, setPasswordRepeat] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [accountType, setAccountType] = useState("user_solver");
+  const [company, setCompany] = useState("");
+  const [dob, setDob] = useState("1970-01-30");
+  const [gender, setGender] = useState(undefined);
 
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [passwordRepeatError, setPasswordRepeatError] = useState(false);
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
+  const [companyError, setCompanyError] = useState(false);
 
   const onClickSubmit = () => {
-    setEmailError(email === "");
-    setPasswordError(password.length < 8);
-    setPasswordRepeatError(password !== passwordRepeat);
-    setFirstNameError(firstName === "");
-    setLastNameError(lastName === "");
+    let anyError = false;
+
+    setEmailError(email === "" && (anyError = true));
+    setPasswordError(password.length < 8 && (anyError = true));
+    setPasswordRepeatError(password !== passwordRepeat && (anyError = true));
+    setFirstNameError(firstName === "" && (anyError = true));
+    setLastNameError(lastName === "" && (anyError = true));
+    setCompanyError(accountType === "user_creator" && company === "" && (anyError = true));
+
+    if (!anyError) {
+      register();
+    }
+  };
+
+  const register = async () => {
+    axios
+      .post("http://192.168.100.6:8888/users/register", {
+        first_name: firstName,
+        last_name: lastName,
+        date_of_birth: dob,
+        role: accountType,
+        company_name: company,
+        gender: gender,
+        password: password,
+        email: email,
+      })
+      .then((res) => {
+        alert("Successfully registered!\nPlease verify your email!");
+        history.push("/");
+      })
+      .catch((e) => {
+        console.log(e.response);
+        alert(`Register failed!\nError: ${e.response.data.error}`);
+      });
   };
 
   const onClickBack = () => {
@@ -64,6 +99,27 @@ const Register = () => {
   const onChangeLastName = (event) => {
     setLastNameError(false);
     setLastName(event.target.value);
+  };
+
+  const onChangeAccountType = (event) => {
+    setAccountType(event.target.value);
+  };
+
+  const onChangeGender = (event) => {
+    if (event.target.value == "") {
+      setGender(undefined);
+    } else {
+      setGender(event.target.value);
+    }
+  };
+
+  const onChangeCompany = (event) => {
+    setCompanyError(false);
+    setCompany(event.target.value);
+  };
+
+  const onChangeDob = (event) => {
+    setDob(event.target.value);
   };
 
   return (
@@ -98,18 +154,35 @@ const Register = () => {
         <input id="register-last-name" className="register-last-name" type="text" onChange={onChangeLastName}></input>
         {lastNameError && <Error message="Last name cannot be empty" />}
         <label>Gender:</label>
-        <select defaultValue="" id="register-gender" className="register-gender">
+        <select defaultValue="" id="register-gender" className="register-gender" onChange={onChangeGender}>
           <option value="">Prefer not to say</option>
           <option value="M">Male</option>
           <option value="F">Female</option>
         </select>
+        <label>Account type:</label>
+        <select
+          onChange={onChangeAccountType}
+          defaultValue=""
+          id="register-account-type"
+          className="register-account-type"
+        >
+          <option value="user_solver">Solver</option>
+          <option value="user_creator">Creator</option>
+        </select>
+        {accountType == "user_creator" && (
+          <>
+            <label>Company name:</label>
+            <input id="register-company" className="register-company" type="text" onChange={onChangeCompany}></input>
+            {companyError && <Error message="Invalid company name" />}
+          </>
+        )}
         <label>Date of birth:</label>
         <input
-          defaultValue="1997-02-20"
+          defaultValue="1970-01-30"
           id="register-date"
           className="register-date"
           type="date"
-          max="2000-01-02"
+          onChange={onChangeDob}
         ></input>
         <input
           id="register-submit"
