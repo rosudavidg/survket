@@ -37,19 +37,19 @@ CREATE TABLE IF NOT EXISTS surveys (
 
 CREATE TABLE IF NOT EXISTS surveys_texts (
     id SERIAL PRIMARY KEY,
-    survey_id INTEGER REFERENCES surveys(id) NOT NULL,
+    survey_id INTEGER REFERENCES surveys(id) ON DELETE CASCADE,
     question VARCHAR (256) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS surveys_choices (
     id SERIAL PRIMARY KEY,
-    survey_id INTEGER REFERENCES surveys(id) NOT NULL,
+    survey_id INTEGER REFERENCES surveys(id) ON DELETE CASCADE,
     question VARCHAR (256) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS surveys_choices_elements (
     id SERIAL PRIMARY KEY,
-    survey_choice_id INTEGER REFERENCES surveys_choices(id) NOT NULL,
+    survey_choice_id INTEGER REFERENCES surveys_choices(id) ON DELETE CASCADE,
     text VARCHAR (256) NOT NULL
 );
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS confirmations (
 
 CREATE TABLE IF NOT EXISTS solved_surveys (
     id SERIAL PRIMARY KEY,
-    survey_id INTEGER REFERENCES surveys(id) NOT NULL,
+    survey_id INTEGER REFERENCES surveys(id) ON DELETE CASCADE,
     user_id INTEGER REFERENCES users(id) NOT NULL,
     timestamp_solved TIMESTAMP DEFAULT NOW(),
     UNIQUE (survey_id, user_id)
@@ -69,14 +69,14 @@ CREATE TABLE IF NOT EXISTS solved_surveys (
 
 CREATE TABLE IF NOT EXISTS solved_surveys_texts (
     id SERIAL PRIMARY KEY,
-    solved_survey_id INTEGER REFERENCES solved_surveys(id) NOT NULL,
-    survey_text_id INTEGER REFERENCES surveys_texts(id) NOT NULL,
+    solved_survey_id INTEGER REFERENCES solved_surveys(id) ON DELETE CASCADE,
+    survey_text_id INTEGER REFERENCES surveys_texts(id) ON DELETE CASCADE,
     answer VARCHAR (256) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS solved_surveys_choices (
     id SERIAL PRIMARY KEY,
-    solved_survey_id INTEGER REFERENCES solved_surveys(id) NOT NULL,
-    survey_choice_id INTEGER REFERENCES surveys_choices(id) NOT NULL,
-    survey_choice_element_id INTEGER REFERENCES surveys_choices_elements(id) NOT NULL
+    solved_survey_id INTEGER REFERENCES solved_surveys(id) ON DELETE CASCADE,
+    survey_choice_id INTEGER REFERENCES surveys_choices(id) ON DELETE CASCADE,
+    survey_choice_element_id INTEGER REFERENCES surveys_choices_elements(id) ON DELETE CASCADE
 );
