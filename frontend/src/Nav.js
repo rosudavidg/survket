@@ -36,8 +36,8 @@ const Nav = () => {
     return (
       <>
         <input className="nav-home" type="submit" value="Home" onClick={onClickHome}></input>
-        <input className="nav-faq" type="submit" value="FAQ" onClick={onClickContact}></input>
-        <input className="nav-contact" type="submit" value="Contact" onClick={onClickSignOut}></input>
+        <input className="nav-faq" type="submit" value="FAQ" onClick={onClickFAQ}></input>
+        <input className="nav-contact" type="submit" value="Contact" onClick={onClickContact}></input>
       </>
     );
   }
