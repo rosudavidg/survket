@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS questions (
     email VARCHAR (50) NOT NULL,
     subject VARCHAR (50) NOT NULL,
     message VARCHAR (512) NOT NULL,
-    answer VARCHAR (512) NOT NULL,
+    answer VARCHAR (512),
     answered BOOLEAN DEFAULT FALSE,
     is_faq BOOLEAN DEFAULT FALSE
 );
