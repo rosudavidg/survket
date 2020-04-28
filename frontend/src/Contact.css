@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Signika:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap");
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-self: center;
+  align-items: center;
+  align-content: center;
+  font-family: "Work Sans", sans-serif;
+  letter-spacing: 1px;
+  background-color: rgb(42, 42, 42);
+  max-width: 600px;
+  height: auto;
+  margin: 20px auto;
+  border-radius: 20px;
+  box-shadow: 4px 6px 20px grey;
+  color: beige;
+}
+
+label {
+  flex: none;
+  margin: 8px 0px;
+  margin-left: 20px;
+  margin-bottom: -3px;
+  font-size: large;
+  max-width: 400px;
+  width: 80%;
+  margin-top: 10px;
+}
+
+.contact-email,
+.contact-subject,
+.contact-message {
+  flex: none;
+  margin: 4px 0px;
+  font-size: medium;
+  max-width: 400px;
+  width: 80%;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  border: none;
+  -webkit-transition: 0.5s;
+  -webkit-appearance: none;
+  background-color: white;
+  transition: 0.5s;
+  outline: none;
+  border-radius: 15px;
+  box-shadow: 1px 1px 10px grey;
+}
+
+.contact-submit,
+.contact-back {
+  align-self: center;
+  text-align: center;
+  flex: none;
+  margin: 4px 0px;
+  font-size: large;
+  max-width: 400px;
+  width: 80%;
+  box-sizing: border-box;
+  -webkit-transition: 0.5s;
+  -webkit-appearance: none;
+  background-color: white;
+  transition: 0.5s;
+  outline: none;
+  background-color: #4caf50;
+  border: 3px solid #4caf50;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  margin: 20px 2px;
+  cursor: pointer;
+  box-shadow: 1px 1px 10px grey;
+  border-radius: 15px;
+}
+
+.contact-back {
+  margin-top: 10px;
+  border: 3px solid #4397b1;
+  background-color: #4397b1;
+}
+
+.contact-email:focus,
+.contact-subject:focus,
+.contact-message:focus {
+  box-shadow: 1px 1px 10px beige;
+}
+
+.contact-note {
+  margin-top: 50px;
+  font-size: medium;
+}
+
+.contact-submit:hover,
+.contact-back:hover {
+  box-shadow: 1px 1px 10px beige;
+}
+
+.contact-title {
+  margin-bottom: 20px;
+}
