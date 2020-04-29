@@ -7,6 +7,7 @@ import Register from "./Register";
 import Home from "./Home";
 import SurveySolve from "./SurveySolve";
 import SurveyStats from "./SurveyStats";
+import FAQ from "./FAQ";
 import { Helmet } from "react-helmet";
 import { isUserAuthenticated, getUserRole } from "./Auth.js";
 import Contact from "./Contact";
@@ -88,6 +89,7 @@ function App() {
                 }}
               />
               <Route exact path="/contact" component={Contact} />
+              <Route exact path="/faq" component={FAQ} />
               <Route
                 path="/"
                 render={() => {

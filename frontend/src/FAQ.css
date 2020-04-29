@@ -1,0 +1,89 @@
+@import url("https://fonts.googleapis.com/css2?family=Signika:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap");
+
+.faq-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-width: 400px;
+  margin: auto;
+  justify-self: center;
+  align-self: center;
+  justify-content: center;
+  justify-self: center;
+  align-self: center;
+  justify-items: center;
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+  align-self: center;
+  font-family: "Work Sans", sans-serif;
+}
+
+.faq-container > * {
+  margin: 20px;
+}
+
+.faq-title,
+.faq-card {
+  display: flex;
+  background-color: rgb(42, 42, 42);
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  color: beige;
+  box-shadow: 2px 4px 10px grey;
+  border-radius: 15px;
+}
+
+.faq-label {
+  flex: none;
+  margin: 8px 0px;
+  margin-left: 20px;
+  margin-bottom: -3px;
+  font-size: large;
+  max-width: 400px;
+  width: 80%;
+  margin-top: 10px;
+}
+
+.faq-question,
+.faq-answer {
+  margin-left: 40px;
+  margin-top: 5px;
+}
+
+.faq-back {
+  align-self: center;
+  text-align: center;
+  flex: none;
+  margin: 4px 0px;
+  font-size: large;
+  max-width: 400px;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-transition: 0.5s;
+  -webkit-appearance: none;
+  background-color: white;
+  transition: 0.5s;
+  outline: none;
+  background-color: #4caf50;
+  border: 3px solid #4caf50;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  margin: 20px 2px;
+  cursor: pointer;
+  box-shadow: 1px 1px 10px grey;
+  border-radius: 15px;
+  margin-top: 10px;
+  border: 3px solid #4397b1;
+  background-color: #4397b1;
+}
+
+.faq-back:hover {
+  box-shadow: 1px 1px 10px black;
+}
