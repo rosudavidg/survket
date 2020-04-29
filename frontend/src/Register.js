@@ -67,7 +67,6 @@ const Register = () => {
         history.push("/");
       })
       .catch((e) => {
-        console.log(e.response);
         alert(`Register failed!\nError: ${e.response.data.error}`);
       });
   };
