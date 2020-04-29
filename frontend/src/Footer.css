@@ -8,6 +8,17 @@
   flex: none;
 }
 
+.f-facebook,
+.f-terms,
+.f-email {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin: 40px;
+  flex-grow: 1;
+  flex: 1;
+}
+
 .footer-contact {
   display: flex;
   justify-content: space-around;
@@ -27,10 +38,14 @@
 }
 
 .footer-facebook,
-.footer-email {
+.footer-email,
+.footer-terms {
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  flex: 0;
 }
 
 a {
@@ -42,4 +57,8 @@ a {
 .footer-facebook-email {
   margin-left: 6px;
   letter-spacing: 2px;
+}
+
+.footer-terms {
+  cursor: pointer;
 }

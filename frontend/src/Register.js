@@ -27,6 +27,7 @@ const Register = () => {
   const [company, setCompany] = useState("");
   const [dob, setDob] = useState("1970-01-30");
   const [gender, setGender] = useState(undefined);
+  const [gdpr, setGdpr] = useState(false);
 
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -34,6 +35,7 @@ const Register = () => {
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
   const [companyError, setCompanyError] = useState(false);
+  const [gdprError, setGdprError] = useState(false);
 
   const onClickSubmit = () => {
     let anyError = false;
@@ -44,6 +46,7 @@ const Register = () => {
     setFirstNameError(firstName === "" && (anyError = true));
     setLastNameError(lastName === "" && (anyError = true));
     setCompanyError(accountType === "user_creator" && company === "" && (anyError = true));
+    setGdprError(gdpr === false && (anyError = true));
 
     if (!anyError) {
       register();
@@ -121,6 +124,11 @@ const Register = () => {
     setDob(event.target.value);
   };
 
+  const onChangeGdpr = (event) => {
+    setGdpr(event.target.checked);
+    setGdprError(false);
+  };
+
   return (
     <>
       <Helmet>
@@ -183,6 +191,11 @@ const Register = () => {
           type="date"
           onChange={onChangeDob}
         ></input>
+        <div className="form-gdpr">
+          <input className="check-box" type="checkbox" onChange={onChangeGdpr} />
+          <div className="gdpr-label">I agree to Survket's Terms & Conditions and Privacy Policy</div>
+        </div>
+        {gdprError && <Error message="You have to agree Terms & Conditions" />}
         <input
           id="register-submit"
           className="register-submit"

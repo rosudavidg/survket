@@ -12,12 +12,14 @@ import { Helmet } from "react-helmet";
 import { isUserAuthenticated, getUserRole } from "./Auth.js";
 import Contact from "./Contact";
 import Confirm from "./Confirm";
+import Terms from "./Terms";
 import axios from "axios";
 import "./App.css";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 function App() {
   const [me, setMe] = useState({ name: "", coins: 0 });
+  const [termsAccepted, setTermsAccepted] = useState(localStorage.getItem("gdpr") === "true");
 
   const updateMe = async () => {
     if (!isUserAuthenticated(localStorage.getItem("token"))) return;
@@ -39,7 +41,7 @@ function App() {
 
   useEffect(() => {
     updateMe();
-  }, []);
+  }, [termsAccepted]);
 
   return (
     <BrowserRouter>
@@ -51,6 +53,13 @@ function App() {
         <div className="content-footer">
           <Content>
             <Switch>
+              {!termsAccepted && (
+                <Route
+                  render={() => {
+                    return <Terms callback={setTermsAccepted} />;
+                  }}
+                />
+              )}
               <Route
                 exact
                 path="/register"
@@ -116,6 +125,7 @@ function App() {
               />
               <Route exact path="/contact" component={Contact} />
               <Route exact path="/faq" component={FAQ} />
+              <Route exact path="/terms" component={Terms} />
               <Route
                 exact
                 path="/confirm/:token"

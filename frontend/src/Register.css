@@ -28,7 +28,8 @@
 .register-gender,
 .register-date,
 .register-account-type,
-.register-company {
+.register-company,
+.form-gdpr {
   flex: none;
   margin: 4px 0px;
   font-size: medium;
@@ -119,4 +120,22 @@ label {
 .register-account-type:focus,
 .register-company:focus {
   box-shadow: 1px 1px 10px beige;
+}
+
+.gdpr-label {
+  color: rgb(42, 42, 42);
+  letter-spacing: normal;
+  font-weight: normal;
+  font-size: medium;
+  margin-left: 5px;
+}
+
+.form-gdpr {
+  display: flex;
+  margin-top: 20px;
+}
+
+.check-box {
+  height: 25px;
+  width: 25px;
 }
