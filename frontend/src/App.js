@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Content from "./Content";
 import Login from "./Login";
@@ -12,17 +12,42 @@ import { Helmet } from "react-helmet";
 import { isUserAuthenticated, getUserRole } from "./Auth.js";
 import Contact from "./Contact";
 import Confirm from "./Confirm";
+import axios from "axios";
 import "./App.css";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 function App() {
+  const [me, setMe] = useState({ name: "", coins: 0 });
+
+  const updateMe = async () => {
+    if (!isUserAuthenticated(localStorage.getItem("token"))) return;
+
+    const jwt_token = localStorage.getItem("token");
+
+    let res;
+    try {
+      res = await axios.get("http://192.168.100.6:8888/users/me", {
+        headers: {
+          Authorization: `Bearer ${jwt_token}`,
+        },
+      });
+      setMe(res.data);
+    } catch (e) {
+      alert("Get user details failed.");
+    }
+  };
+
+  useEffect(() => {
+    updateMe();
+  }, []);
+
   return (
     <BrowserRouter>
       <Helmet>
         <title>Survket</title>
       </Helmet>
       <div className="app">
-        <Header />
+        <Header me={me} />
         <div className="content-footer">
           <Content>
             <Switch>
@@ -42,7 +67,7 @@ function App() {
                 path="/login"
                 render={() => {
                   if (!isUserAuthenticated(localStorage.getItem("token"))) {
-                    return <Login />;
+                    return <Login updateMe={updateMe} />;
                   } else {
                     return <Redirect to="/"></Redirect>;
                   }

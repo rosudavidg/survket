@@ -1,6 +1,5 @@
 .header {
   background-color: rgb(42, 42, 42);
-  /* min-height: 1000px; */
   color: beige;
   font-size: xx-large;
   font-weight: 800;
@@ -26,8 +25,10 @@
 
 .header-nav {
   display: flex;
-  flex: 1;
-  /* margin: auto; */
+  margin: auto;
+  flex-direction: row;
   margin-right: 20px;
   justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
 }

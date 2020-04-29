@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import "./Login.css";
 
-const Login = () => {
+const Login = (props) => {
   const history = useHistory();
 
   const [email, setEmail] = useState("");
@@ -25,6 +25,7 @@ const Login = () => {
 
         localStorage.setItem("token", jwt_token);
 
+        props.updateMe();
         history.push("/");
       })
       .catch((e) => {

@@ -22,6 +22,23 @@
   border-radius: 10px;
 }
 
+.nav-name {
+  font-size: medium;
+  letter-spacing: 0px;
+}
+
+.nav-coins {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.nav-coins-value {
+  font-size: 0.5em;
+  margin-left: 5px;
+}
+
 .nav-signout:hover,
 .nav-home:hover,
 .nav-contact:hover,

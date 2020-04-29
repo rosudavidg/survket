@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import Nav from "./Nav.js";
 import "./Header.css";
 
-const Header = () => {
+const Header = (props) => {
   const history = useHistory();
   const onClickTitle = () => {
     history.push("/");
@@ -15,7 +15,7 @@ const Header = () => {
         Survket
       </div>
       <div className="header-nav">
-        <Nav />
+        <Nav me={props.me} />
       </div>
     </div>
   );
