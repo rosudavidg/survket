@@ -81,8 +81,6 @@ const sendConfirmationLink = async (email, token) => {
 
   await http
     .request(options, function (res) {
-      console.log("STATUS: " + res.statusCode);
-      console.log("HEADERS: " + JSON.stringify(res.headers));
       res.setEncoding("utf8");
       res.on("data", function (chunk) {
         console.log("BODY: " + chunk);
@@ -102,8 +100,29 @@ function generateToken() {
   return result;
 }
 
+const sendContactAnswer = async (email, question, answer) => {
+  const options = {
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    path: `/contact?email=${encodeURIComponent(email)}&question=${encodeURIComponent(
+      question
+    )}&answer=${encodeURIComponent(answer)}`,
+    method: "GET",
+  };
+
+  await http
+    .request(options, function (res) {
+      res.setEncoding("utf8");
+      res.on("data", function (chunk) {
+        console.log("BODY: " + chunk);
+      });
+    })
+    .end();
+};
+
 module.exports = {
   validateFields,
   sendConfirmationLink,
   generateToken,
+  sendContactAnswer,
 };

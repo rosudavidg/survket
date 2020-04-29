@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const QuestionsService = require("./services.js");
-const { validateFields } = require("../utils");
+const { validateFields, sendContactAnswer } = require("../utils");
 const { authorizeAndExtractToken } = require("../security/JWT/index.js");
 const { authorizeRoles } = require("../Security/Roles/index.js");
 
@@ -33,6 +33,10 @@ router.post("/:id/answer", authorizeAndExtractToken, authorizeRoles("admin", "su
     });
 
     await QuestionsService.answerQuestion(id, answer);
+
+    let { email, message } = await QuestionsService.get(id);
+
+    sendContactAnswer(email, message, answer);
 
     res.sendStatus(200);
   } catch (err) {

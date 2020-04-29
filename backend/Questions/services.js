@@ -25,4 +25,8 @@ const getFAQ = async () => {
   return await query("SELECT message, answer FROM questions WHERE is_faq = TRUE");
 };
 
-module.exports = { create, getNotAnswered, getAnswered, answerQuestion, setFAQ, getFAQ };
+const get = async (id) => {
+  return (await query("SELECT * FROM questions WHERE id = $1", [id]))[0];
+};
+
+module.exports = { create, getNotAnswered, getAnswered, answerQuestion, setFAQ, getFAQ, get };
