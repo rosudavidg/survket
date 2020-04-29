@@ -24,7 +24,6 @@ const Home = () => {
 
   useEffect(() => {
     getSurveys();
-    // setSurveys([{ title: "Uleiul perfect", reward: 100, creator: "Auchan" }]);
   }, []);
 
   return (
