@@ -29,7 +29,7 @@ const Login = () => {
       })
       .catch((e) => {
         setPassword("");
-        alert("Login failed!");
+        alert(`Login failed!\nError: ${e.response.data.error}`);
       });
   };
 

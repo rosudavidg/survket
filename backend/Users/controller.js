@@ -1,6 +1,6 @@
 const express = require("express");
 const UsersService = require("./services.js");
-const { validateFields, sendConfirmationLink } = require("../utils");
+const { validateFields, sendConfirmationLink, generateToken } = require("../utils");
 const { authorizeAndExtractToken } = require("../security/JWT/index.js");
 const router = express.Router();
 const { authorizeRoles } = require("../Security/Roles/index.js");
@@ -139,16 +139,32 @@ register = async (res, req, next, role) => {
 
     let rows = await UsersService.createUser(role, email, password, first_name, last_name, gender, date_of_birth);
 
-    // TODO: Generate confirmation token
+    const token = generateToken();
 
-    // TODO: Insert token into database/confirmations
+    await UsersService.insertToken(rows[0].id, token);
 
-    await sendConfirmationLink(email, "token");
+    await sendConfirmationLink(email, token);
 
     return rows[0].id;
   } catch (err) {
     next(err);
   }
 };
+
+router.post("/confirm/:token", async (req, res, next) => {
+  const token = req.params.token;
+
+  try {
+    const rc = await UsersService.activate(token);
+
+    if (rc) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(400);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;

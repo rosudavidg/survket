@@ -11,6 +11,7 @@ import FAQ from "./FAQ";
 import { Helmet } from "react-helmet";
 import { isUserAuthenticated, getUserRole } from "./Auth.js";
 import Contact from "./Contact";
+import Confirm from "./Confirm";
 import "./App.css";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
@@ -90,6 +91,13 @@ function App() {
               />
               <Route exact path="/contact" component={Contact} />
               <Route exact path="/faq" component={FAQ} />
+              <Route
+                exact
+                path="/confirm/:token"
+                render={(props) => {
+                  return <Confirm {...props} />;
+                }}
+              />
               <Route
                 path="/"
                 render={() => {

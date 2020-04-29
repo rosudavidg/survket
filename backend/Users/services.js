@@ -44,7 +44,7 @@ const createUser = async (role, email, password, first_name, last_name, gender, 
 
 const authenticate = async (email, password) => {
   const queryResult = await query(
-    "SELECT u.password, r.role, u.id FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = $1",
+    "SELECT u.password, r.role, u.id, u.activated FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = $1",
     [email]
   );
 
@@ -55,9 +55,14 @@ const authenticate = async (email, password) => {
   const storedPassword = queryResult[0].password;
   const userRole = queryResult[0].role;
   const userId = queryResult[0].id;
+  const activated = queryResult[0].activated;
 
   if (!(await compare(password, storedPassword))) {
     throw new ServerError(`Parola pentru emailul ${email} este gresita!`, 403);
+  }
+
+  if (!activated) {
+    throw new ServerError("This account is not activated!\nPlease check your email!", 400);
   }
 
   const payload = { userEmail: email, userRole, userId };
@@ -76,10 +81,31 @@ const getMe = async (userId, userRole) => {
   return { name: res.first_name + " " + res.last_name, coins: 100 };
 };
 
+const insertToken = async (userId, token) => {
+  await query("INSERT INTO confirmations (user_id, token) VALUES ($1, $2)", [userId, token]);
+};
+
+const activate = async (token) => {
+  let r = await query("SELECT user_id FROM confirmations WHERE token = $1", [token]);
+
+  if (r.length === 0) {
+    throw new ServerError("Invalid token!", 400);
+  }
+
+  const userId = r[0].user_id;
+
+  await query("UPDATE users SET activated = TRUE WHERE id = $1", [userId]);
+  await query("DELETE from confirmations WHERE user_id = $1", [userId]);
+
+  return true;
+};
+
 module.exports = {
   getAll,
   createUser,
   authenticate,
   AddCompany,
   getMe,
+  insertToken,
+  activate,
 };
