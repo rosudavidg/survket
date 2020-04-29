@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 import "./Contact.css";
 
 const Contact = () => {
@@ -24,6 +25,22 @@ const Contact = () => {
     setMessage(event.target.value);
   };
 
+  const onClickSubmit = () => {
+    axios
+      .post("http://192.168.100.6:8888/questions", {
+        email,
+        subject,
+        message,
+      })
+      .then((res) => {
+        alert("Successfully submitted!");
+        history.push("/");
+      })
+      .catch((e) => {
+        alert(`Submit failed!\nError: ${e.response.data.error}`);
+      });
+  };
+
   return (
     <div className="contact-form">
       <label className="contact-title">Contact</label>
@@ -33,7 +50,6 @@ const Contact = () => {
       <input id="contact-subject" className="contact-subject" type="text" onChange={onChangeSubject} />
       <label>Message:</label>
       <textarea
-        id="w3mission"
         rows="6"
         cols="50"
         id="contact-message"
@@ -42,7 +58,13 @@ const Contact = () => {
         onChange={onChangeMessage}
       />
       <label className="contact-note">Before submit your question, please check FAQ page.</label>
-      <input id="contact-submit" className="contact-submit" type="button" value="Submit"></input>
+      <input
+        id="contact-submit"
+        className="contact-submit"
+        type="button"
+        value="Submit"
+        onClick={onClickSubmit}
+      ></input>
       <input id="contact-back" className="contact-back" type="button" value="Back" onClick={onClickBack}></input>
     </div>
   );
