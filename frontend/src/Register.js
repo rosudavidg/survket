@@ -128,7 +128,7 @@ const Register = () => {
       </Helmet>
       <form className="register-form">
         <label>Email:</label>
-        <input id="register-email" className="register-email" type="text" onChange={onChangeEmail}></input>
+        <input id="register-email" className="register-email email" type="text" onChange={onChangeEmail}></input>
         {emailError && <Error message="Invalid email" />}
         <label>Password:</label>
         <input id="register-password" className="register-password" type="password" onChange={onChangePassword}></input>
