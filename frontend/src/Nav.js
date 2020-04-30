@@ -9,7 +9,7 @@ const Nav = (props) => {
   const history = useHistory();
 
   const onClickSignOut = () => {
-    localStorage.clear("token");
+    localStorage.removeItem("token");
     history.push("/");
   };
 
