@@ -135,6 +135,7 @@ const Register = () => {
         <title>Register</title>
       </Helmet>
       <form className="register-form">
+        <div className="register-title">Register</div>
         <label>Email:</label>
         <input id="register-email" className="register-email email" type="text" onChange={onChangeEmail}></input>
         {emailError && <Error message="Invalid email" />}
@@ -193,7 +194,14 @@ const Register = () => {
         ></input>
         <div className="form-gdpr">
           <input className="check-box" type="checkbox" onChange={onChangeGdpr} />
-          <div className="gdpr-label">I agree to Survket's Terms & Conditions and Privacy Policy</div>
+          <div
+            className="gdpr-label"
+            onClick={() => {
+              history.push("/terms");
+            }}
+          >
+            I agree to Survket's Terms & Conditions and Privacy Policy
+          </div>
         </div>
         {gdprError && <Error message="You have to agree Terms & Conditions" />}
         <input
