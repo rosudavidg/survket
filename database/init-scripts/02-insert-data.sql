@@ -3,6 +3,8 @@ INSERT INTO roles (id, role) VALUES (2, 'support');
 INSERT INTO roles (id, role) VALUES (3, 'user_solver');
 INSERT INTO roles (id, role) VALUES (4, 'user_creator');
 
+INSERT INTO configurations (config_name, config_value) VALUES ('create_survey_cost', '10');
+
 INSERT INTO
     users (first_name, last_name, email, password, activated, role_id, date_of_birth)
     VALUES ('David', 'Rosu', 'rosudavidg@gmail.com', '$2a$05$.Err72Bs/V43iN25E0aL2OEEHi0H/RKa.K4MlIh/wtNv7lqGkWcF.', TRUE, 1, '1997-04-03');

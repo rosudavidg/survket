@@ -90,3 +90,8 @@ CREATE TABLE IF NOT EXISTS questions (
     answered BOOLEAN DEFAULT FALSE,
     is_faq BOOLEAN DEFAULT FALSE
 );
+
+CREATE TABLE IF NOT EXISTS configurations (
+    config_name VARCHAR (50) NOT NULL,
+    config_value VARCHAR (50) NOT NULL
+);
