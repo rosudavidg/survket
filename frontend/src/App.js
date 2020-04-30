@@ -13,6 +13,7 @@ import { isUserAuthenticated, getUserRole } from "./Auth.js";
 import Contact from "./Contact";
 import Confirm from "./Confirm";
 import Terms from "./Terms";
+import CreateSurvey from "./CreateSurvey";
 import axios from "axios";
 import "./App.css";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
@@ -126,6 +127,17 @@ function App() {
               <Route exact path="/contact" component={Contact} />
               <Route exact path="/faq" component={FAQ} />
               <Route exact path="/terms" component={Terms} />
+              <Route
+                exact
+                path="/create"
+                render={() => {
+                  if (isUserAuthenticated(localStorage.getItem("token"))) {
+                    return <CreateSurvey />;
+                  } else {
+                    return <Redirect to="/login"></Redirect>;
+                  }
+                }}
+              />
               <Route
                 exact
                 path="/confirm/:token"

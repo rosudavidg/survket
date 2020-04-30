@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css2?family=Signika:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap");
+
+.create-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: "Work Sans", sans-serif;
+  font-size: large;
+  max-width: 600px;
+  margin: auto;
+  color: beige;
+}
+
+.create-container > * {
+  margin-top: 30px;
+}
+
+.create-title,
+.create-reward,
+.create-text-component,
+.create-choice-component,
+.create-text {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(42, 42, 42);
+  border-radius: 15px;
+  padding: 20px 20px;
+  -webkit-transition: 0.5s;
+  box-shadow: 1px 1px 10px grey;
+}
+
+.create-title-input,
+.create-reward-input,
+.create-text-input {
+  display: flex;
+  font-size: medium;
+  width: 80%;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  border: none;
+  -webkit-transition: 0.5s;
+  -webkit-appearance: none;
+  background-color: white;
+  transition: 0.5s;
+  outline: none;
+  border-radius: 15px;
+  box-shadow: 1px 1px 10px grey;
+  align-self: center;
+  margin-top: 20px;
+}
+
+.create-title-input:focus,
+.create-reward-input:focus,
+.create-text-input:focus {
+  box-shadow: 1px 1px 10px beige;
+}
+
+.create-text-component-group,
+.create-choice-component-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-text-component-text,
+.create-choice-component-text {
+  margin-left: 10px;
+}
+
+.create-text-component,
+.create-choice-component {
+  background-color: #4caf50;
+  cursor: pointer;
+}
+
+.create-text-component:hover,
+.create-choice-component:hover {
+  box-shadow: 1px 1px 10px black;
+}
+
+.create-delete-container,
+.create-add-choice-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  width: 80%;
+  justify-self: center;
+  align-self: center;
+  margin-top: 30px;
+  border-radius: 15px;
+  padding: 6px 10px;
+  box-shadow: 1px 1px 10px grey;
+  cursor: pointer;
+  border: none;
+  -webkit-transition: 0.5s;
+  -webkit-appearance: none;
+}
+
+.create-add-choice-container {
+  background-color: #4caf50;
+}
+
+.create-delete-container:hover,
+.create-add-choice-container:hover {
+  box-shadow: 1px 1px 10px beige;
+}
+
+.create-delete-container-choice:hover {
+  box-shadow: 1px 1px 10px beige;
+}
+
+.create-delete-container-choice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  width: 80%;
+  justify-self: center;
+  align-self: center;
+  margin-top: 30px;
+  border-radius: 15px;
+  padding: 2px 4px;
+  box-shadow: 1px 1px 10px grey;
+  cursor: pointer;
+  border: none;
+  -webkit-transition: 0.5s;
+  -webkit-appearance: none;
+}
+
+.create-text-component-text-choice {
+  margin-left: 10px;
+}
+
+.create-submit,
+.create-back {
+  align-self: center;
+  text-align: center;
+  flex: none;
+  margin: 4px 0px;
+  font-size: large;
+  /* max-width: 400px; */
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-transition: 0.5s;
+  -webkit-appearance: none;
+  background-color: white;
+  transition: 0.5s;
+  outline: none;
+  background-color: #4caf50;
+  border: 3px solid #4caf50;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  margin: 20px 2px;
+  cursor: pointer;
+  box-shadow: 1px 1px 10px grey;
+  border-radius: 15px;
+  margin-top: 60px;
+}
+
+.create-back {
+  margin-top: 10px;
+  border: 3px solid #4397b1;
+  background-color: #4397b1;
+}
+
+.create-submit:hover,
+.create-back:hover {
+  box-shadow: 1px 1px 10px black;
+}
