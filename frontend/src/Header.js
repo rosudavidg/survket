@@ -14,6 +14,7 @@ const Header = (props) => {
       <div className="header-title" onClick={onClickTitle}>
         Survket
       </div>
+      <img src="logo.png" height="60" />
       <div className="header-nav">
         <Nav me={props.me} />
       </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { getUserRole } from "./Auth.js";
 import Survey from "./Survey";
 import NewSurveyCard from "./NewSurveyCard";
+import CoinsModifier from "./CoinsModifier";
 import "./SurveyList.css";
 
 const setNewSurveyCardIsVisible = () => {
@@ -19,11 +20,28 @@ const setNewSurveyCardIsVisible = () => {
   }
 };
 
+const setCoinsModifierIsVisible = () => {
+  const userRole = getUserRole(localStorage.getItem("token"));
+
+  switch (userRole) {
+    case "user_creator":
+    case "support":
+    case "user_solver":
+      return false;
+    case "admin":
+      return true;
+    default:
+      return false;
+  }
+};
+
 const SurveyList = (props) => {
   const newSurveyCardIsVisible = setNewSurveyCardIsVisible();
+  const coinsModifierIsVisible = setCoinsModifierIsVisible();
 
   return (
     <div className="survey-list">
+      {coinsModifierIsVisible && <CoinsModifier />}
       {newSurveyCardIsVisible && <NewSurveyCard />}
       {!newSurveyCardIsVisible && props.surveys.length === 0 && <div>No surveys for you 😕</div>}
       {props.surveys.map((survey) => {

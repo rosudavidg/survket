@@ -1,0 +1,59 @@
+.coins-modifier {
+  background-color: rgb(42, 42, 42);
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 397px;
+  padding: 10px;
+  color: beige;
+  box-shadow: 2px 4px 10px grey;
+  border: 3px solid rgb(42, 42, 42);
+  border-radius: 15px;
+}
+
+.coins-modifier-title {
+  flex-grow: 1;
+  text-align: center;
+  font-family: "Work Sans", sans-serif;
+  font-size: x-large;
+}
+
+.coins-modifier-cost {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+  text-align: center;
+  font-family: "Signika", sans-serif;
+  font-size: xx-large;
+  color: rgb(160, 139, 20);
+  font-weight: 700;
+  text-shadow: 0.1px 0.1px 1.5px black;
+  align-self: center;
+}
+
+.coins-modifier-value {
+  margin-left: 10px;
+}
+
+.coins-modifier-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  align-self: center;
+  filter: drop-shadow(0 0mm 1mm black);
+}
+
+.coins-modifier-increase,
+.coins-modifier-decrease {
+  margin: 20px;
+  font-size: 2em;
+  cursor: pointer;
+  -webkit-transition: 0.5s;
+  -webkit-appearance: none;
+}
+.coins-modifier-increase:hover,
+.coins-modifier-decrease:hover {
+  filter: drop-shadow(0 0mm 1mm grey);
+}
