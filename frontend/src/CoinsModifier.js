@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins, faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
-const getCreateNewSurveyCost = async () => {
+const getCreateNewSurveyCost = async (setFunc) => {
   try {
     const jwt_token = localStorage.getItem("token");
     const cost = await axios.get(`http://192.168.100.6:8888/configurations/create-survey-cost`, {
@@ -12,7 +12,7 @@ const getCreateNewSurveyCost = async () => {
         Authorization: `Bearer ${jwt_token}`,
       },
     });
-    return cost.data;
+    setFunc(cost.data);
   } catch (err) {
     alert(err.response.message);
   }
@@ -40,9 +40,8 @@ const setCreateNewSurveyCostCall = async (value) => {
 const CoinsModifier = () => {
   const [createNewSurveyCost, setCreateNewSurveyCost] = useState(0);
 
-  useEffect(async () => {
-    const coins = await getCreateNewSurveyCost();
-    setCreateNewSurveyCost(coins);
+  useEffect(() => {
+    getCreateNewSurveyCost(setCreateNewSurveyCost);
   }, []);
 
   const onClickIncrease = () => {
