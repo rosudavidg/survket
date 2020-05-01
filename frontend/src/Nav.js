@@ -3,9 +3,28 @@ import { isUserAuthenticated } from "./Auth.js";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCoins } from "@fortawesome/free-solid-svg-icons";
+import { getUserRole } from "./Auth.js";
 import "./Nav.css";
 
+const setCoinsAreVisible = () => {
+  if (!isUserAuthenticated(localStorage.getItem("token"))) return false;
+
+  const userRole = getUserRole(localStorage.getItem("token"));
+
+  switch (userRole) {
+    case "user_creator":
+    case "user_solver":
+      return true;
+    case "admin":
+    case "support":
+      return false;
+    default:
+      return false;
+  }
+};
+
 const Nav = (props) => {
+  const coinsAreVisible = setCoinsAreVisible();
   const history = useHistory();
 
   const onClickSignOut = () => {
@@ -29,10 +48,12 @@ const Nav = (props) => {
     return (
       <>
         <div className="nav-name">{props.me.name}</div>
-        <div className="nav-coins">
-          <FontAwesomeIcon icon={faCoins} color="rgb(160, 139, 20)" style={{ "font-size": "1.3rem" }} />
-          <div className="nav-coins-value">{props.me.coins}</div>
-        </div>
+        {coinsAreVisible && (
+          <div className="nav-coins">
+            <FontAwesomeIcon icon={faCoins} color="rgb(160, 139, 20)" style={{ "font-size": "1.3rem" }} />
+            <div className="nav-coins-value">{props.me.coins}</div>
+          </div>
+        )}
         <div>
           <input className="nav-home" type="submit" value="Home" onClick={onClickHome}></input>
           <input className="nav-faq" type="submit" value="FAQ" onClick={onClickFAQ}></input>
