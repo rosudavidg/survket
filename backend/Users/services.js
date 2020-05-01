@@ -29,10 +29,16 @@ const createUser = async (role, email, password, first_name, last_name, gender, 
   }
 
   try {
-    return await query(
+    let res = await query(
       "INSERT INTO users (role_id, email, password, first_name, last_name, gender, date_of_birth) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
       [role_id, email, hashedPassword, first_name, last_name, gender, date_of_birth]
     );
+
+    if (role == "user_solver") {
+      await query("INSERT INTO solver_users (id, coins) VALUES ($1, 0)", [res[0].id]);
+    }
+
+    return res;
   } catch (e) {
     if (e.message.includes("users_email_key")) {
       throw new ServerError("Email is already registered!", 400);
@@ -78,7 +84,25 @@ const AddCompany = async (userId, companyName) => {
 const getMe = async (userId, userRole) => {
   const res = (await query("SELECT first_name, last_name FROM users WHERE id = $1", [userId]))[0];
 
-  return { name: res.first_name + " " + res.last_name, coins: 100 };
+  let userCoins = 99999;
+
+  if (userRole === "admin") {
+    userCoins = 9999999;
+  } else if (userRole === "user_creator") {
+    userCoins = (
+      await query("SELECT coins FROM users JOIN creator_users ON users.id = creator_users.id WHERE users.id = $1", [
+        userId,
+      ])
+    )[0].coins;
+  } else if (userRole === "user_solver") {
+    userCoins = (
+      await query("SELECT coins FROM users JOIN solver_users ON users.id = solver_users.id WHERE users.id = $1", [
+        userId,
+      ])
+    )[0].coins;
+  }
+
+  return { name: res.first_name + " " + res.last_name, coins: userCoins };
 };
 
 const insertToken = async (userId, token) => {
