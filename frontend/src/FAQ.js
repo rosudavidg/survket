@@ -128,6 +128,7 @@ const FAQ = () => {
       <>
         <div className="faq-container-notanswered">
           <div className="faq-title">New quesitons</div>
+          {faqsAdmin.not_answered.length === 0 && <div>There are no new questions for you 😕</div>}
           {faqsAdmin.not_answered.map((e) => {
             return (
               <div key={e.id} className="faq-card">
