@@ -10,9 +10,9 @@ const setNewSurveyCardIsVisible = () => {
 
   switch (userRole) {
     case "user_creator":
+      return true;
     case "admin":
     case "support":
-      return true;
     case "user_solver":
       return false;
     default:
@@ -42,7 +42,7 @@ const SurveyList = (props) => {
   return (
     <div className="survey-list">
       {coinsModifierIsVisible && <CoinsModifier />}
-      {newSurveyCardIsVisible && <NewSurveyCard />}
+      {newSurveyCardIsVisible && <NewSurveyCard me={props.me} />}
       {!newSurveyCardIsVisible && props.surveys.length === 0 && <div>No surveys for you 😕</div>}
       {props.surveys.map((survey) => {
         return (

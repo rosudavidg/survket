@@ -3,7 +3,7 @@ import axios from "axios";
 import SurveyList from "./SurveyList.js";
 import "./Home.css";
 
-const Home = () => {
+const Home = (props) => {
   const [surveys, setSurveys] = useState([]);
 
   const getSurveys = async () => {
@@ -28,7 +28,7 @@ const Home = () => {
 
   return (
     <div className="home">
-      <SurveyList surveys={surveys} />
+      <SurveyList surveys={surveys} me={props.me} />
     </div>
   );
 };

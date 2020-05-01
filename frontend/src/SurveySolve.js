@@ -34,6 +34,7 @@ const SurveySolver = (props) => {
           Authorization: `Bearer ${jwt_token}`,
         },
       });
+      props.updateMe();
       history.push("/");
     } catch (e) {
       alert("Solve survey failed.");

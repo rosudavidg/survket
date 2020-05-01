@@ -124,7 +124,7 @@ const ChoiceComponent = (props) => {
   );
 };
 
-const CreateSurvey = () => {
+const CreateSurvey = (props) => {
   const [name, setName] = useState("");
   const [reward, setReward] = useState(0);
   const [surveysTexts, setSurveysTexts] = useState([]);
@@ -208,6 +208,7 @@ const CreateSurvey = () => {
         }
       );
       history.push("/");
+      props.updateMe();
       alert("Successfully created!");
     } catch (e) {
       alert(`Error: ${e.response.data.error}`);

@@ -89,7 +89,7 @@ function App() {
                 render={(props) => {
                   if (isUserAuthenticated(localStorage.getItem("token"))) {
                     if (getUserRole(localStorage.getItem("token")) === "user_solver") {
-                      return <SurveySolve {...props} />;
+                      return <SurveySolve {...props} updateMe={updateMe} />;
                     } else {
                       return <Redirect to="/"></Redirect>;
                     }
@@ -118,7 +118,7 @@ function App() {
                 path="/"
                 render={() => {
                   if (isUserAuthenticated(localStorage.getItem("token"))) {
-                    return <Home />;
+                    return <Home me={me} />;
                   } else {
                     return <Redirect to="/login"></Redirect>;
                   }
@@ -132,7 +132,7 @@ function App() {
                 path="/create"
                 render={() => {
                   if (isUserAuthenticated(localStorage.getItem("token"))) {
-                    return <CreateSurvey />;
+                    return <CreateSurvey updateMe={updateMe} />;
                   } else {
                     return <Redirect to="/login"></Redirect>;
                   }
