@@ -2,6 +2,22 @@ const query = require("../database");
 const { ServerError } = require("../errors");
 
 const create = async (userId, name, reward, surveys_texts, surveys_choices) => {
+  const newSurveyCost = (
+    await query("SELECT config_value FROM configurations WHERE config_name = 'create_survey_cost'")
+  )[0].config_value;
+
+  const userCoins = (
+    await query("SELECT coins FROM users JOIN creator_users ON users.id = creator_users.id WHERE users.id = $1", [
+      userId,
+    ])
+  )[0].coins;
+
+  if (userCoins < newSurveyCost) {
+    throw new ServerError("insufficient coins!", 400);
+  }
+
+  await query("UPDATE creator_users set coins=$2 WHERE id = $1", [userId, userCoins - newSurveyCost]);
+
   // Insert into surveys
   let rows = await query("INSERT INTO surveys (creator, name, reward) VALUES ($1, $2, $3) RETURNING *", [
     userId,
@@ -199,6 +215,10 @@ let solve = async (surveyId, userId, surveys_text, surveys_choices) => {
   let rows = undefined;
   try {
     await query("BEGIN");
+
+    const surveyReward = (await query("SELECT reward from surveys WHERE id = $1", [surveyId]))[0].reward;
+
+    await query("UPDATE solver_users SET coins = coins + $2 WHERE id = $1", [userId, surveyReward]);
 
     rows = await query("INSERT INTO solved_surveys (survey_id, user_id) VALUES ($1, $2) RETURNING *", [
       surveyId,
