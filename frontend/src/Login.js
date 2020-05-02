@@ -16,7 +16,7 @@ const Login = (props) => {
 
   const onClickLogin = () => {
     axios
-      .post("http://192.168.100.6:8888/users/login", {
+      .post("/users/login", {
         email: email,
         password: password,
       })

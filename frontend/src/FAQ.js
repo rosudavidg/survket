@@ -23,7 +23,7 @@ const FAQ = () => {
     ) {
       const jwt_token = localStorage.getItem("token");
       axios
-        .get("http://192.168.100.6:8888/questions/", {
+        .get("/questions/", {
           headers: {
             Authorization: `Bearer ${jwt_token}`,
           },
@@ -36,12 +36,12 @@ const FAQ = () => {
         });
     } else {
       axios
-        .get("http://192.168.100.6:8888/questions/faq")
+        .get(`/questions/faq`)
         .then((res) => {
           setFaqs(res.data);
         })
         .catch((err) => {
-          alert("Cannot get FAQS!");
+          alert(`Cannot get FAQS! ${err}`);
         });
     }
   };
@@ -64,7 +64,7 @@ const FAQ = () => {
     const jwt_token = localStorage.getItem("token");
     axios
       .post(
-        `http://192.168.100.6:8888/questions/${id}/answer`,
+        `/questions/${id}/answer`,
         { answer: msg[0].answer },
         {
           headers: {
@@ -84,7 +84,7 @@ const FAQ = () => {
     const jwt_token = localStorage.getItem("token");
     axios
       .post(
-        `http://192.168.100.6:8888/questions/${id}/setfaq`,
+        `/questions/${id}/setfaq`,
         {},
         {
           headers: {
@@ -104,7 +104,7 @@ const FAQ = () => {
     const jwt_token = localStorage.getItem("token");
     axios
       .post(
-        `http://192.168.100.6:8888/questions/${id}/unsetfaq`,
+        `/questions/${id}/unsetfaq`,
         {},
         {
           headers: {

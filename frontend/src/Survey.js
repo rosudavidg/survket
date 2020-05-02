@@ -39,7 +39,7 @@ const Survey = (props) => {
     const jwt_token = localStorage.getItem("token");
     let res;
     try {
-      res = await axios.delete(`http://192.168.100.6:8888/surveys/${props.id}`, {
+      res = await axios.delete(`/surveys/${props.id}`, {
         headers: {
           Authorization: `Bearer ${jwt_token}`,
         },

@@ -11,7 +11,7 @@ const SurveyStats = (props) => {
     const jwt_token = localStorage.getItem("token");
     let res;
     try {
-      res = await axios.get(`http://192.168.100.6:8888/surveys/${props.match.params.id}/stats`, {
+      res = await axios.get(`/surveys/${props.match.params.id}/stats`, {
         headers: {
           Authorization: `Bearer ${jwt_token}`,
         },

@@ -13,7 +13,7 @@ const SurveySolver = (props) => {
 
     let res;
     try {
-      res = await axios.get(`http://192.168.100.6:8888/surveys/${props.match.params.id}`, {
+      res = await axios.get(`/surveys/${props.match.params.id}`, {
         headers: {
           Authorization: `Bearer ${jwt_token}`,
         },
@@ -29,7 +29,7 @@ const SurveySolver = (props) => {
     const jwt_token = localStorage.getItem("token");
 
     try {
-      await axios.post(`http://192.168.100.6:8888/surveys/${props.match.params.id}/solve`, answers, {
+      await axios.post(`/surveys/${props.match.params.id}/solve`, answers, {
         headers: {
           Authorization: `Bearer ${jwt_token}`,
         },

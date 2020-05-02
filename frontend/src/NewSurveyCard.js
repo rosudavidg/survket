@@ -8,7 +8,7 @@ import "./NewSurveyCard.css";
 const getCreateNewSurveyCost = async (setFunc) => {
   try {
     const jwt_token = localStorage.getItem("token");
-    const cost = await axios.get(`http://192.168.100.6:8888/configurations/create-survey-cost`, {
+    const cost = await axios.get(`/configurations/create-survey-cost`, {
       headers: {
         Authorization: `Bearer ${jwt_token}`,
       },

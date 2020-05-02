@@ -11,7 +11,7 @@ const Home = (props) => {
 
     let res;
     try {
-      res = await axios.get("http://192.168.100.6:8888/surveys", {
+      res = await axios.get("/surveys", {
         headers: {
           Authorization: `Bearer ${jwt_token}`,
         },

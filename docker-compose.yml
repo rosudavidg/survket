@@ -1,5 +1,19 @@
 version: "3.1"
 services:
+  # frontend:
+  #   image: survket_frontend
+  #   volumes:
+  #     - "./frontend/.:/app"
+  #     - "/app/node_modules"
+  #   ports:
+  #     - 3001:3000
+  #   environment:
+  #     CHOKIDAR_USEPOLLING: "true"
+  #     REACT_APP_BACKEND_HOST: backend
+  #     REACT_APP_BACKEND_PORT: 5000
+  #   stdin_open: true
+  #   networks:
+  #     - webnetwork
   backend:
     # image: rosudavidg/survket-backend:latest
     image: survket_backend
@@ -36,8 +50,8 @@ services:
       - secret_database_db
     networks:
       - webnetwork
-    volumes:
-      - ./backend/:/usr/src/app
+    # volumes:
+    #   - ./backend/:/usr/src/app
   database:
     # image: rosudavidg/survket-database:latest
     image: survket_database

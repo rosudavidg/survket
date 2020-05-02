@@ -194,7 +194,7 @@ const CreateSurvey = (props) => {
 
     try {
       await axios.post(
-        `http://192.168.100.6:8888/surveys/`,
+        `/surveys/`,
         {
           name,
           reward,

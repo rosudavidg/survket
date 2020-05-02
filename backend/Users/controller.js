@@ -3,7 +3,7 @@ const UsersService = require("./services.js");
 const { validateFields, sendConfirmationLink, generateToken } = require("../utils");
 const { authorizeAndExtractToken } = require("../security/JWT/index.js");
 const router = express.Router();
-const { authorizeRoles } = require("../Security/Roles/index.js");
+const { authorizeRoles } = require("../security/Roles/index.js");
 const { ServerError } = require("../errors");
 
 router.get("/", authorizeAndExtractToken, authorizeRoles("admin", "support"), async (req, res, next) => {

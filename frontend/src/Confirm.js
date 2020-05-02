@@ -10,7 +10,7 @@ const Confirm = (props) => {
     const token = props.match.params.token;
 
     axios
-      .post(`http://localhost:8888/users/confirm/${token}`, {})
+      .post(`/users/confirm/${token}`, {})
       .then((res) => {
         alert("Successfully activated!");
         history.push("/login");

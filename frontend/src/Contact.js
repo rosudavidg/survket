@@ -27,7 +27,7 @@ const Contact = () => {
 
   const onClickSubmit = () => {
     axios
-      .post("http://192.168.100.6:8888/questions", {
+      .post("/questions", {
         email,
         subject,
         message,

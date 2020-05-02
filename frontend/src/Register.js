@@ -55,7 +55,7 @@ const Register = () => {
 
   const register = async () => {
     axios
-      .post("http://192.168.100.6:8888/users/register", {
+      .post("/users/register", {
         first_name: firstName,
         last_name: lastName,
         date_of_birth: dob,

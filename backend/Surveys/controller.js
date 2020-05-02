@@ -3,7 +3,7 @@ const SurveysService = require("./services.js");
 const { validateFields } = require("../utils");
 const { authorizeAndExtractToken } = require("../security/JWT/index.js");
 const router = express.Router();
-const { authorizeRoles } = require("../Security/Roles/index.js");
+const { authorizeRoles } = require("../security/Roles/index.js");
 
 router.get(
   "/",
