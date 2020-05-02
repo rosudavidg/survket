@@ -43,12 +43,12 @@ services:
       JWT_SUBJECT: Authentication token
       JWT_AUDIENCE: survket_frontend
       JWT_EXPIRESIN: 1w
-      # TODO: docker secrets
-      JWT_SECRET_KEY: myawesomeultrasecretkey
+      JWT_SECRET_KEY: /run/secrets/secret_jwt_key
     secrets:
       - secret_database_user
       - secret_database_password
       - secret_database_db
+      - secret_jwt_key
     networks:
       - webnetwork
     volumes:
@@ -131,3 +131,5 @@ secrets:
     file: ./secrets/secret_database_db
   secret_grafana_password:
     file: ./secrets/secret_grafana_password
+  secret_jwt_key:
+    file: ./secrets/secret_jwt_key

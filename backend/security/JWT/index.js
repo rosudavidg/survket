@@ -1,17 +1,18 @@
 const jwt = require("jsonwebtoken");
 const { ServerError } = require("../../errors/index.js");
 const { validateFields } = require("../../utils");
+const fs = require("fs");
 
-const secretKey = process.env.JWT_SECRET_KEY;
+const secretKey = fs.readFileSync(process.env.JWT_SECRET_KEY, "utf8");
 
 const options = {
   issuer: process.env.JWT_ISSUER,
   subject: process.env.JWT_SUBJECT,
   audience: process.env.JWT_AUDIENCE,
-  expiresIn: process.env.JWT_EXPIRESIN
+  expiresIn: process.env.JWT_EXPIRESIN,
 };
 
-const generateToken = async payload => {
+const generateToken = async (payload) => {
   try {
     const token = await jwt.sign(payload, secretKey, options);
     return token;
@@ -20,7 +21,7 @@ const generateToken = async payload => {
   }
 };
 
-const verifyAndDecodeData = async token => {
+const verifyAndDecodeData = async (token) => {
   try {
     const decoded = await jwt.verify(token, secretKey, options);
     return decoded;
@@ -39,14 +40,14 @@ const authorizeAndExtractToken = async (req, res, next) => {
     validateFields({
       jwt: {
         value: token,
-        type: "jwt"
-      }
+        type: "jwt",
+      },
     });
 
     const decoded = await verifyAndDecodeData(token);
 
     req.state = {
-      decoded
+      decoded,
     };
 
     next();
@@ -57,5 +58,5 @@ const authorizeAndExtractToken = async (req, res, next) => {
 
 module.exports = {
   generateToken,
-  authorizeAndExtractToken
+  authorizeAndExtractToken,
 };
