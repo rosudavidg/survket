@@ -1,19 +1,20 @@
 version: "3.1"
 services:
-  # frontend:
-  #   image: survket_frontend
-  #   volumes:
-  #     - "./frontend/.:/app"
-  #     - "/app/node_modules"
-  #   ports:
-  #     - 3001:3000
-  #   environment:
-  #     CHOKIDAR_USEPOLLING: "true"
-  #     REACT_APP_BACKEND_HOST: backend
-  #     REACT_APP_BACKEND_PORT: 5000
-  #   stdin_open: true
-  #   networks:
-  #     - webnetwork
+  frontend:
+    # image: rosudavidg/survket-frontend:latest
+    image: survket_frontend
+    volumes:
+      - "./frontend/.:/app"
+      - "/app/node_modules"
+    ports:
+      - 3001:3000
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      REACT_APP_BACKEND_HOST: backend
+      REACT_APP_BACKEND_PORT: 5000
+    stdin_open: true
+    networks:
+      - webnetwork
   backend:
     # image: rosudavidg/survket-backend:latest
     image: survket_backend
@@ -50,8 +51,8 @@ services:
       - secret_database_db
     networks:
       - webnetwork
-    # volumes:
-    #   - ./backend/:/usr/src/app
+    volumes:
+      - ./backend/:/usr/src/app
   database:
     # image: rosudavidg/survket-database:latest
     image: survket_database
@@ -90,7 +91,7 @@ services:
     networks:
       - webnetwork
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:6.6.2
     depends_on:
       - database
     ports:
@@ -102,11 +103,13 @@ services:
       GRAFANA_USERNAME: /run/secrets/secret_database_user
       GRAFANA_PASSWORD: /run/secrets/secret_database_password
       GRAFANA_DB_NAME: /run/secrets/secret_database_db
-      GF_SECURITY_ADMIN_PASSWORD: /run/secrets/secret_grafana_password
+      GF_SECURITY_ADMIN_PASSWORD_FILE: /run/secrets/admin.pwd
     networks:
       - webnetwork
     secrets:
-      - secret_grafana_password
+      - source: secret_grafana_password
+        target: /run/secrets/admin.pwd
+        mode: 0444
       - secret_database_user
       - secret_database_password
       - secret_database_db
