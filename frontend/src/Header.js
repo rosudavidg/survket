@@ -11,10 +11,7 @@ const Header = (props) => {
 
   return (
     <div className="header">
-      <div className="header-title" onClick={onClickTitle}>
-        Survket
-      </div>
-      <img src="logo.png" height="60" />
+      <img src="logo.png" height="60" onClick={onClickTitle} />
       <div className="header-nav">
         <Nav me={props.me} />
       </div>
