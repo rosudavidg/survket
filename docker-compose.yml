@@ -1,11 +1,8 @@
 version: "3.1"
 services:
   frontend:
-    # image: rosudavidg/survket-frontend:latest
-    image: survket_frontend
-    volumes:
-      - "./frontend/.:/app"
-      - "/app/node_modules"
+    image: rosudavidg/survket-frontend:latest
+    # image: survket_frontend
     ports:
       - 3001:3000
     environment:
@@ -16,12 +13,12 @@ services:
     networks:
       - webnetwork
   backend:
-    # image: rosudavidg/survket-backend:latest
-    image: survket_backend
+    image: rosudavidg/survket-backend:latest
+    # image: survket_backend
     depends_on:
       - database
     deploy:
-      replicas: 1
+      replicas: 4
       resources:
         limits:
           cpus: "0.2"
@@ -51,11 +48,9 @@ services:
       - secret_jwt_key
     networks:
       - webnetwork
-    volumes:
-      - ./backend/:/usr/src/app
   database:
-    # image: rosudavidg/survket-database:latest
-    image: survket_database
+    image: rosudavidg/survket-database:latest
+    # image: survket_database
     environment:
       POSTGRES_USER_FILE: /run/secrets/secret_database_user
       POSTGRES_PASSWORD_FILE: /run/secrets/secret_database_password
@@ -72,8 +67,8 @@ services:
     networks:
       - webnetwork
   email:
-    # image: rosudavidg/survket-email:latest
-    image: survket_email
+    image: rosudavidg/survket-email:latest
+    # image: survket_email
     environment:
       EMAIL_ADDRESS: /run/secrets/secret_email_address
       EMAIL_PASSWORD: /run/secrets/secret_email_password
