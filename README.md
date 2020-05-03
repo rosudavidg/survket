@@ -169,7 +169,7 @@ docker swarm init --advertise-addr <IP-ul masinii curente>
 
 `<IP myvm1 sau myvm2>:3001`
 
-### Conectare la seviciul de monitorizare (Grafana):
+### Conectare la serviciul de monitorizare (Grafana):
 
 `<IP myvm1 sau myvm2>:30009`
 
