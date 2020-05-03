@@ -1,0 +1,515 @@
+{
+	"info": {
+		"_postman_id": "e312d57b-8c94-4253-bef9-4f7b96311048",
+		"name": "survket",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "/users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f72ba910-c278-47b6-89f8-516661443548",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJyb3N1ZGF2aWRnQGdtYWlsLmNvbSIsInVzZXJSb2xlIjoiYWRtaW4iLCJpYXQiOjE1ODQ3MTI1NDIsImV4cCI6MTU4NTMxNzM0MiwiYXVkIjoic3VydmtldF9mcm9udGVuZCIsImlzcyI6InN1cnZrZXRfYmFja2VuZCIsInN1YiI6IkF1dGhlbnRpY2F0aW9uIHRva2VuIn0.NDJLsFuaqSwL8H354rr0NI-Xzu5wLS8quwXeOXsQJgk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/users/",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJyb3N1ZGF2aWRnQGdtYWlsLmNvbSIsInVzZXJSb2xlIjoiYWRtaW4iLCJ1c2VySWQiOjEsImlhdCI6MTU4NjQ0NzgzMiwiZXhwIjoxNTg3MDUyNjMyLCJhdWQiOiJzdXJ2a2V0X2Zyb250ZW5kIiwiaXNzIjoic3VydmtldF9iYWNrZW5kIiwic3ViIjoiQXV0aGVudGljYXRpb24gdG9rZW4ifQ.0HeniXe8--vVCHwPk7ujFv9p8VHybZsZVziRIWNgDVQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"first_name\": \"First\",\n\t\"last_name\": \"Last\",\n\t\"date_of_birth\": \"2002-11-02\",\n\t\"role_id\": 1,\n\t\"gender\": \"M\",\n\t\"password\": \"1234\",\n\t\"email\": \"rosudavidg9@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/users/",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/login AS CREATOR",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"diferenta@buzunarul.tau\",\n\t\"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/users/login",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/login AS SOLVER",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"ancuta.rosu@yahoo.com\",\n\t\"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/users/login",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/login AS ADMIN",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"rosudavidg@gmail.com\",\n\t\"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/users/login",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/login AS SUPPORT",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"regele@vizualizarilor.top\",\n\t\"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/users/login",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/users/register",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJyb3N1ZGF2aWRnQGdtYWlsLmNvbSIsInVzZXJSb2xlIjoiYWRtaW4iLCJ1c2VySWQiOjEsImlhdCI6MTU4NTIzMzcxOSwiZXhwIjoxNTg1ODM4NTE5LCJhdWQiOiJzdXJ2a2V0X2Zyb250ZW5kIiwiaXNzIjoic3VydmtldF9iYWNrZW5kIiwic3ViIjoiQXV0aGVudGljYXRpb24gdG9rZW4ifQ.ciHoxwylLCbr1EqlgX1-6fnNZFIHFRadK985a_8Irvk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"first_name\": \"First\",\n\t\"last_name\": \"Last\",\n\t\"date_of_birth\": \"2002-11-02\",\n\t\"role\": \"user_creator\",\n\t\"company_name\": \"My Company Boss\",\n\t\"gender\": \"M\",\n\t\"password\": \"1234\",\n\t\"email\": \"ancuta.rosu@yahoo.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/users/register",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/confirm",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJyZWdlbGVAdml6dWFsaXphcmlsb3IudG9wIiwidXNlclJvbGUiOiJzdXBwb3J0IiwidXNlcklkIjoyLCJpYXQiOjE1ODgxMDY4MDUsImV4cCI6MTU4ODcxMTYwNSwiYXVkIjoic3VydmtldF9mcm9udGVuZCIsImlzcyI6InN1cnZrZXRfYmFja2VuZCIsInN1YiI6IkF1dGhlbnRpY2F0aW9uIHRva2VuIn0.ZEN2r6nCuNCbeVsyVbeLZ-Lxq_oC2pBMp_0Nrhy4wxc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"hello@h.com\",\n\t\"subject\":\"d\",\n\t\"message\":\"MESAAAJ\",\n\t\"answer\": \"AM RASPUNS SEFuuuu\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/users/confirm/uwbFNRyRiamoTuZIRyh2c7fDcfHOLUNrThqj8btlRTuJrMjPWTGW2PTzTMFWeB3Z",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"users",
+								"confirm",
+								"uwbFNRyRiamoTuZIRyh2c7fDcfHOLUNrThqj8btlRTuJrMjPWTGW2PTzTMFWeB3Z"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Surveys",
+			"item": [
+				{
+					"name": "/surveys",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJjYXJyZWZvdXJAZ2FsYWN0aWMudGF1IiwidXNlclJvbGUiOiJ1c2VyX2NyZWF0b3IiLCJ1c2VySWQiOjUsImlhdCI6MTU4NzgzMTkzMCwiZXhwIjoxNTg4NDM2NzMwLCJhdWQiOiJzdXJ2a2V0X2Zyb250ZW5kIiwiaXNzIjoic3VydmtldF9iYWNrZW5kIiwic3ViIjoiQXV0aGVudGljYXRpb24gdG9rZW4ifQ.V1cfV6WPWQtzEYLBRwdej26PcAZ_1XTzs1kfNMUntuQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"My First Survey 2\",\n\t\"reward\": 100,\n\t\"surveys_texts\": [\n\t\t{\n\t\t\t\"question\": \"Cate kg ai?\"\n\t\t},\n\t\t{\n\t\t\t\"question\": \"De ce ma minti?\"\n\t\t}\n\t],\n\t\"surveys_choices\": [\n\t\t{\n\t\t\t\"question\": \"La mare sau la munte?\",\n\t\t\t\"surveys_choices_elements\": [\n\t\t\t\t{\n\t\t\t\t\t\"text\": \"La mare\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"text\": \"La munte\"\n\t\t\t\t}\n\t\t\t]\n\t\t},\n\t\t{\n\t\t\t\"question\": \"Mai ai faina in casa?\",\n\t\t\t\"surveys_choices_elements\": [\n\t\t\t\t{\n\t\t\t\t\t\"text\": \"Da\"\n\t\t\t\t},\n\t\t\t\t{\n\t\t\t\t\t\"text\": \"Nu\"\n\t\t\t\t}\n\t\t\t]\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/surveys",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"surveys"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/surveys/:id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJkaWZlcmVudGFAYnV6dW5hcnVsLnRhdSIsInVzZXJSb2xlIjoidXNlcl9jcmVhdG9yIiwidXNlcklkIjo0LCJpYXQiOjE1ODY0Mjg3MTksImV4cCI6MTU4NzAzMzUxOSwiYXVkIjoic3VydmtldF9mcm9udGVuZCIsImlzcyI6InN1cnZrZXRfYmFja2VuZCIsInN1YiI6IkF1dGhlbnRpY2F0aW9uIHRva2VuIn0.RAN-gjxS7fMpjx9nhEJuiZ8JCW0Sxx0sSuZ4tJPGsCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/surveys/1",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"surveys",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/surveys/:id/solve",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJhbmN1dGEucm9zdUB5YWhvby5jb20iLCJ1c2VyUm9sZSI6InVzZXJfc29sdmVyIiwidXNlcklkIjo2LCJpYXQiOjE1ODY0NDE3MjAsImV4cCI6MTU4NzA0NjUyMCwiYXVkIjoic3VydmtldF9mcm9udGVuZCIsImlzcyI6InN1cnZrZXRfYmFja2VuZCIsInN1YiI6IkF1dGhlbnRpY2F0aW9uIHRva2VuIn0.6O7pw62D9AsNSFMgWGXnt4BygcwuwyXKf5PYfvViqPg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"surveys_texts\": [\n\t\t{\n\t\t\t\"id\": 1,\n\t\t\t\"answer\": 54\n\t\t},\n\t\t{\n\t\t\t\"id\": 2,\n\t\t\t\"answer\": \"Spui doar vorbe-n vant\"\n\t\t}\n\t],\n\t\"surveys_choices\": [\n\t\t{\n\t\t\t\"id\": 1,\n\t\t\t\"survey_choice_element_id\": 2\n\t\t},\n\t\t{\n\t\t\t\"id\": 2,\n\t\t\t\"survey_choice_element_id\": 4\n\t\t}\n\t]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/surveys/1/solve",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"surveys",
+								"1",
+								"solve"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/surveys/:id/stats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJkaWZlcmVudGFAYnV6dW5hcnVsLnRhdSIsInVzZXJSb2xlIjoidXNlcl9jcmVhdG9yIiwidXNlcklkIjo0LCJpYXQiOjE1ODY0Mjg3MTksImV4cCI6MTU4NzAzMzUxOSwiYXVkIjoic3VydmtldF9mcm9udGVuZCIsImlzcyI6InN1cnZrZXRfYmFja2VuZCIsInN1YiI6IkF1dGhlbnRpY2F0aW9uIHRva2VuIn0.RAN-gjxS7fMpjx9nhEJuiZ8JCW0Sxx0sSuZ4tJPGsCY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/surveys/1/stats",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"surveys",
+								"1",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Questions",
+			"item": [],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Configurations",
+			"item": [
+				{
+					"name": "/configurations/create-survey-cost",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJyb3N1ZGF2aWRnQGdtYWlsLmNvbSIsInVzZXJSb2xlIjoiYWRtaW4iLCJ1c2VySWQiOjEsImlhdCI6MTU4ODQyMzQ4OCwiZXhwIjoxNTg5MDI4Mjg4LCJhdWQiOiJzdXJ2a2V0X2Zyb250ZW5kIiwiaXNzIjoic3VydmtldF9iYWNrZW5kIiwic3ViIjoiQXV0aGVudGljYXRpb24gdG9rZW4ifQ.c7eBCzK3Ix_LJeB5xJrhMdO9kHewzxK-Yk3jCRSBKZ8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/configurations/create-survey-cost",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"configurations",
+								"create-survey-cost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/configurations/create-survey-cost",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJyb3N1ZGF2aWRnQGdtYWlsLmNvbSIsInVzZXJSb2xlIjoiYWRtaW4iLCJ1c2VySWQiOjUwLCJpYXQiOjE1ODgyNzIwODgsImV4cCI6MTU4ODg3Njg4OCwiYXVkIjoic3VydmtldF9mcm9udGVuZCIsImlzcyI6InN1cnZrZXRfYmFja2VuZCIsInN1YiI6IkF1dGhlbnRpY2F0aW9uIHRva2VuIn0.H5x1FkNmwBYZAqA5xSahs6jcsMv7q6ab0Mcnmk-vfDE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"value\" : 70\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}:{{PORT}}/configurations/create-survey-cost",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"configurations",
+								"create-survey-cost"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
